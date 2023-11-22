@@ -71,7 +71,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:1.5.3")
 
     //Coil
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.4.0")
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.5.1")

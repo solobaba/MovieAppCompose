@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.rememberImagePainter
 import com.example.movieappcompose.theme.MovieAppComposeTheme
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.screen.MoviesHomeList
@@ -23,19 +26,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MovieAppComposeTheme {
+                //val scrollState = rememberScrollState()
+
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxHeight(),
+                        //.verticalScroll(scrollState),
                     color = MaterialTheme.colorScheme.primary
                 ) {
-                    Column {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
                         Toolbar(
                             title = getString(R.string.app_name),
-                            icon = Icons.Default.Home) {
+                            icon = rememberImagePainter(R.drawable.ic_baseline_movie_filter_24)
+                        ) {
                         }
                         MoviesHomeList()
                     }
-
                 }
             }
         }

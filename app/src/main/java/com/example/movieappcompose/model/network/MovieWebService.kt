@@ -13,6 +13,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
@@ -54,12 +55,13 @@ class MovieWebService {
     }
 
     interface Service {
+        @Headers(Constants.apiToken)
         @GET("/3/discover/movie")
         suspend fun getMovieListAsync(
             @Query("sort_by") sortBy: String,
             @Query("with_genres") withGenres: String? = null,
-            @Query("page") page: Int = 1,
-            @Query("api_key") apiKey: String = Constants.apiKey
+            @Query("page") page: Int = 1
+            //@Query("api_key") apiKey: String = Constants.apiKey
         ): DiscoverResult
 
         @GET("/3/movie/{movieId}")

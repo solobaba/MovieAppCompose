@@ -12,10 +12,6 @@ class MovieRepository(private val movieWebService: MovieWebService = MovieWebSer
 ) {
     private var cachedMeals = listOf<Movie>()
 
-    var sortBy: String = ""
-    var withGenres: String = ""
-    var page: Int = 1
-
     suspend fun fetchMovies(sortBy: SortBy, withGenres: String?, page: Int): DiscoverResult {
         val response = movieWebService.getMovieListAsync(sortBy.notation, withGenres, page)
         cachedMeals = response.results
