@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 
 class MovieWebService {
 
-    private var api: Service
+    private var api: ApiService
 
     init {
         val retrofit = Retrofit.Builder()
@@ -30,7 +30,7 @@ class MovieWebService {
             .client(getClient())
             .build()
 
-        api = retrofit.create(Service::class.java)
+        api = retrofit.create(ApiService::class.java)
     }
 
     private fun getClient(): OkHttpClient {
@@ -52,27 +52,5 @@ class MovieWebService {
 
         Log.d("FetchMovieServices", Gson().toJson(api.getMovieListAsync(sortBy, withGenres, page)))
         return api.getMovieListAsync(sortBy, withGenres, page)
-    }
-
-    interface Service {
-        @Headers(Constants.apiToken)
-        @GET("/3/discover/movie")
-        suspend fun getMovieListAsync(
-            @Query("sort_by") sortBy: String,
-            @Query("with_genres") withGenres: String? = null,
-            @Query("page") page: Int = 1
-            //@Query("api_key") apiKey: String = Constants.apiKey
-        ): DiscoverResult
-
-        @GET("/3/movie/{movieId}")
-        suspend fun getMovieDetails(
-            @Path("movieId") movieId: Int = -1,
-            @Query("api_key") apiKey: String = Constants.apiKey
-        ): Response<MovieDetail>
-
-        @GET("/3/genre/movie/list")
-        suspend fun getAllGenreList(
-            @Query("api_key") apiKey: String = Constants.apiKey
-        ): Response<GenreResult>
     }
 }

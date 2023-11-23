@@ -1,9 +1,8 @@
-package com.example.movieappcompose.ui.screen
+package com.example.movieappcompose.ui.screen.homeScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -41,23 +39,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 
 @Composable
-fun VerticalMovie() {
+fun VerticalMovie(navController: NavHostController) {
     //val scrollState = rememberLazyListState()
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.popularMoviesList.value
 
     LazyColumn(contentPadding = PaddingValues(10.dp)) {
         items(horizontalMovies) { movie ->
-            PopularMovies(movie)
+            PopularMovies(navController, movie)
         }
     }
 }
 
 @Composable
-fun PopularMovies(movie: Movie) {
+fun PopularMovies(navController: NavHostController, movie: Movie) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

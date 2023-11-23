@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 
 @OptIn(ExperimentalMaterial3Api::class)
