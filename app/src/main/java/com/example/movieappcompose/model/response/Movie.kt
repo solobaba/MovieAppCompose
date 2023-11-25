@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 //@Entity(tableName = "all_movies")
 data class Movie(
@@ -21,4 +22,4 @@ data class Movie(
     val video: Boolean? = null,
     val vote_average: Double? = null,
     val vote_count: Int? = null
-)
+): Serializable

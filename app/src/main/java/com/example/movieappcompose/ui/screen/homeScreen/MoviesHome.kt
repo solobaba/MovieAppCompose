@@ -25,7 +25,7 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.ui.component.Toolbar
 
 @Composable
-fun MoviesHome(navController: NavHostController, navigationCallback: (Int) -> Unit) {
+fun MoviesHome(navController: NavHostController, navigationCallback: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -41,19 +41,21 @@ fun MoviesHome(navController: NavHostController, navigationCallback: (Int) -> Un
 }
 
 @Composable
-fun MoviesHomeList(navController: NavHostController, navigationCallback: (Int) -> Unit) {
+fun MoviesHomeList(navController: NavHostController, navigationCallback: (String) -> Unit) {
     NowShowingMoviesList(navController, navigationCallback)
     PopularMoviesList(navController, navigationCallback)
 }
 
 @Composable
-fun NowShowingMoviesList(navController: NavHostController, navigationCallback: (Int) -> Unit) {
+fun NowShowingMoviesList(navController: NavHostController, navigationCallback: (String) -> Unit) {
     NowShowingHeader(navigationCallback)
-    HorizontalMovieList(navController)
+    HorizontalMovieList(navController) {
+
+    }
 }
 
 @Composable
-fun NowShowingHeader(navigationCallback: (Int) -> Unit) {
+fun NowShowingHeader(navigationCallback: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +79,7 @@ fun NowShowingHeader(navigationCallback: (Int) -> Unit) {
                 modifier = Modifier
                     .padding(2.dp)
                     .align(Alignment.CenterEnd),
-                onClick = { navigationCallback.invoke(0) },
+                onClick = { navigationCallback.invoke("0") },
                 border = BorderStroke(
                     width = 1.dp,
                     color = Color.LightGray
@@ -93,13 +95,13 @@ fun NowShowingHeader(navigationCallback: (Int) -> Unit) {
 }
 
 @Composable
-fun PopularMoviesList(navController: NavHostController, navigationCallback: (Int) -> Unit) {
+fun PopularMoviesList(navController: NavHostController, navigationCallback: (String) -> Unit) {
     PopularMoviesHeader(navigationCallback)
     VerticalMovie(navController)
 }
 
 @Composable
-fun PopularMoviesHeader(navigationCallback: (Int) -> Unit) {
+fun PopularMoviesHeader(navigationCallback: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,7 +124,7 @@ fun PopularMoviesHeader(navigationCallback: (Int) -> Unit) {
                 modifier = Modifier
                     .padding(2.dp)
                     .align(Alignment.CenterEnd),
-                onClick = { navigationCallback.invoke(1) },
+                onClick = { navigationCallback.invoke("1") },
                 border = BorderStroke(
                     width = 1.dp,
                     color = Color.LightGray

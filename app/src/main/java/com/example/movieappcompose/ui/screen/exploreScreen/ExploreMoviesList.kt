@@ -15,7 +15,7 @@ import com.example.movieappcompose.ui.screen.homeScreen.PopularMovies
 import com.example.movieappcompose.viewmodel.ExploreMoviesViewModel
 
 @Composable
-fun ExploreMoviesList(navController: NavHostController, id: Int?) {
+fun ExploreMoviesList(navController: NavHostController, id: String?) {
     Column {
         Toolbar(
             title = "Explore",
@@ -28,8 +28,8 @@ fun ExploreMoviesList(navController: NavHostController, id: Int?) {
 }
 
 @Composable
-fun MovieList(id: Int?, navController: NavHostController) {
-    if (id == 0) {
+fun MovieList(id: String?, navController: NavHostController) {
+    if (id == "0") {
         val viewModel: ExploreMoviesViewModel = viewModel()
         val horizontalMovies = viewModel.voteMoviesList.value
 

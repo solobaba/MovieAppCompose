@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -37,27 +37,31 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.ui.screen.ScreenRoute
+import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 
 @Composable
-fun HorizontalMovieList(navController: NavHostController) {
+fun HorizontalMovieList(navController: NavHostController, onClick: (Movie) -> Unit) {
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.voteMoviesList.value
 
     LazyRow(contentPadding = PaddingValues(10.dp)) {
-        items(horizontalMovies) { movie ->
-            VoteCountMovieList(navController, movie)
+        itemsIndexed(horizontalMovies) { _, movie ->
+            VoteCountMovieList(navController, movie, onClick)
         }
     }
 }
 
 @Composable
-fun VoteCountMovieList(navController: NavHostController, movie: Movie) {
+fun VoteCountMovieList(navController: NavHostController, movie: Movie, onClick: (Movie) -> Unit) {
+    val moviesString = movie.toJson()
     Column(
         modifier = Modifier
             .width(150.dp)
             .wrapContentSize()
             .padding(10.dp)
+            .clickable { navController.navigate("movieDetails/{$moviesString}") }
     ) {
         MovieImage(movie.poster_path)
         MovieTitle(movie.title)
