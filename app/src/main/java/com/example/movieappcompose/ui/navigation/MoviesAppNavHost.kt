@@ -21,6 +21,7 @@ fun MoviesAppNavHost() {
         composable(ScreenRoute.Home.route) {
             MoviesHome(navController) { navigationId ->
                 navController.navigate( "explorerMoviesList/$navigationId")
+                //navController.navigate( "movieDetails/moviesString")
             }
         }
 
@@ -32,7 +33,7 @@ fun MoviesAppNavHost() {
             ExploreMoviesList(navController, id)
         }
 
-        composable("movieDetails/{moviesString}",
+        composable(ScreenRoute.Details.route,
             arguments = listOf(navArgument(name = "moviesString") {
                 type = NavType.StringType
             })) { navBackStackEntry ->
@@ -41,19 +42,5 @@ fun MoviesAppNavHost() {
                 MovieDetailsScreen(navController, movies)
             }
         }
-
-//        composable("moviesHome") {
-//            MoviesHome() { navigationId ->
-//                navController.navigate( "explorerMoviesList/$navigationId")
-//            }
-//        }
-//
-//        composable("explorerMoviesList/{id}",
-//            arguments = listOf(navArgument(name = "id") {
-//                type = NavType.IntType
-//            })) { navBackStackEntry ->
-//            val id = navBackStackEntry.arguments?.getInt("id")
-//            ExploreMoviesList(navController, id)
-//        }
     }
 }

@@ -61,7 +61,7 @@ fun VoteCountMovieList(navController: NavHostController, movie: Movie, onClick: 
             .width(150.dp)
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate("movieDetails/{$moviesString}") }
+            .clickable { navController.navigate( ScreenRoute.Details.route + moviesString) }
     ) {
         MovieImage(movie.poster_path)
         MovieTitle(movie.title)
