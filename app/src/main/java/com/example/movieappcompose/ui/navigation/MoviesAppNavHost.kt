@@ -21,7 +21,7 @@ fun MoviesAppNavHost() {
         composable(ScreenRoute.Home.route) {
             MoviesHome(navController) { navigationId ->
                 navController.navigate( "explorerMoviesList/$navigationId")
-                //navController.navigate( "movieDetails/moviesString")
+                navController.navigate( "movieDetails/moviesString")
             }
         }
 
