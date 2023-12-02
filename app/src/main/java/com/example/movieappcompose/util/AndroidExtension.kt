@@ -14,7 +14,3 @@ fun <A> String.fromJson(type: Class<A>): A {
 fun <A> A.toJson(): String? {
     return Gson().toJson(this)
 }
-
-fun <A> A.toJsonJson(): String? {
-    return Gson().toJson(this)
-}
