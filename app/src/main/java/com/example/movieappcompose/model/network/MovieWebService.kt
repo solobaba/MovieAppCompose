@@ -49,8 +49,6 @@ class MovieWebService {
         withGenres: String?,
         page: Int
     ): DiscoverResult {
-
-        Log.d("FetchMovieServices", Gson().toJson(api.getMovieListAsync(sortBy, withGenres, page)))
         return api.getMovieListAsync(sortBy, withGenres, page)
     }
 }

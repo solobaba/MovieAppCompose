@@ -36,7 +36,7 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
 
 @Composable
-fun MovieDetailsScreen(navController: NavHostController, movies: Movie) {
+fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +70,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie) {
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(150.dp),
+                        .height(250.dp),
                     model = R.drawable.profile_picture,
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
@@ -84,7 +84,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie) {
         ) {
             Text(
                 modifier = Modifier.wrapContentSize(),
-                text = movies.title ?: "Default title",
+                text = movies?.title ?: "Default title",
                 color = Color.DarkGray,
                 textAlign = TextAlign.Start,
                 fontFamily = FontFamily(Font(R.font.mulish_bold)),
@@ -110,7 +110,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie) {
                         .wrapContentSize()
                         .padding(start = 5.dp)
                         .align(Alignment.CenterVertically),
-                    text = movies.vote_average.toString() ?: "Default count",
+                    text = movies?.vote_average.toString() ?: "Default count",
                     color = Color(0xFF9C9C9C),
                     style = MaterialTheme.typography.headlineMedium,
                     fontFamily = FontFamily(Font(R.font.mulish_regular)),
@@ -129,7 +129,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 3.dp),
-                text = movies.overview ?: "Default overview",
+                text = movies?.overview ?: "Default overview",
                 color = Color(0xFF9C9C9C),
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,

@@ -15,7 +15,7 @@ import com.example.movieappcompose.ui.screen.homeScreen.PopularMovies
 import com.example.movieappcompose.viewmodel.ExploreMoviesViewModel
 
 @Composable
-fun ExploreMoviesList(navController: NavHostController, id: String?) {
+fun ExploreMoviesList(navController: NavHostController, id: Int?) {
     Column {
         Toolbar(
             title = "Explore",
@@ -28,14 +28,16 @@ fun ExploreMoviesList(navController: NavHostController, id: String?) {
 }
 
 @Composable
-fun MovieList(id: String?, navController: NavHostController) {
-    if (id == "0") {
+fun MovieList(id: Int?, navController: NavHostController) {
+    if (id == 0) {
         val viewModel: ExploreMoviesViewModel = viewModel()
         val horizontalMovies = viewModel.voteMoviesList.value
 
         LazyColumn(contentPadding = PaddingValues(10.dp)) {
             items(horizontalMovies) { movie ->
-                PopularMovies(navController, movie)
+                PopularMovies(navController, movie) {
+
+                }
             }
         }
     } else {
@@ -44,7 +46,9 @@ fun MovieList(id: String?, navController: NavHostController) {
 
         LazyColumn(contentPadding = PaddingValues(10.dp)) {
             items(horizontalMovies) { movie ->
-                PopularMovies(navController, movie)
+                PopularMovies(navController, movie) {
+
+                }
             }
         }
     }

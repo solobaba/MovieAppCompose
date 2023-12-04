@@ -43,24 +43,25 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 
 @Composable
-fun VerticalMovie(navController: NavHostController) {
+fun VerticalMovie(navController: NavHostController, navigationCallback: (Int) -> Unit) {
     //val scrollState = rememberLazyListState()
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.popularMoviesList.value
 
     LazyColumn(contentPadding = PaddingValues(10.dp)) {
         items(horizontalMovies) { movie ->
-            PopularMovies(navController, movie)
+            PopularMovies(navController, movie, navigationCallback)
         }
     }
 }
 
 @Composable
-fun PopularMovies(navController: NavHostController, movie: Movie) {
+fun PopularMovies(navController: NavHostController, movie: Movie, navigationCallback: (Int) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
+            .clickable { navigationCallback.invoke(movie.id) }
     ) {
         PopularMovieImage(movie.poster_path)
         MovieTitleOverview(

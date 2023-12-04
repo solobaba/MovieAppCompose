@@ -19,6 +19,12 @@ class MovieRepository(private val movieWebService: MovieWebService = MovieWebSer
         return response
     }
 
+    fun getMeal(id: Int) : Movie? {
+        return cachedMeals.firstOrNull {
+            it.id == id
+        }
+    }
+
     companion object {
         @Volatile
         private var instance : MovieRepository? = null
