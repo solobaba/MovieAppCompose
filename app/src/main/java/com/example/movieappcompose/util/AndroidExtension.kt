@@ -16,6 +16,3 @@ fun <A> A.toJson(): String? {
 }
 
 //Object To Json String
-fun <A> A.toJsonJson(): String? {
-    return Gson().toJson(this)
-}
