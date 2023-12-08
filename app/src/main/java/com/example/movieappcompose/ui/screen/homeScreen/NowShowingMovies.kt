@@ -22,6 +22,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +42,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.ui.component.LoadingView
 import com.example.movieappcompose.ui.screen.ScreenRoute
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
@@ -46,11 +52,28 @@ fun HorizontalMovieList(navController: NavHostController, onClick: (Movie) -> Un
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.voteMoviesList.value
 
+    val loading by viewModel.loading.collectAsState()
+
+    when {
+        loading -> LoadingView()
+        //val horizontalMovies = viewModel.voteMoviesList.value
+    }
+
+    var loader by remember { mutableStateOf(false) }
+
+    if (loader) {
+        LoadingView()
+    }
+
+    loader = !loader
+
     LazyRow(contentPadding = PaddingValues(10.dp)) {
         itemsIndexed(horizontalMovies) { _, movie ->
             VoteCountMovieList(navController, movie, onClick)
         }
     }
+
+    loader = loader
 }
 
 @Composable
@@ -61,7 +84,7 @@ fun VoteCountMovieList(navController: NavHostController, movie: Movie, onClick: 
             .width(150.dp)
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate( ScreenRoute.Details.route + moviesString) }
+            .clickable { navController.navigate(ScreenRoute.Details.route + moviesString) }
     ) {
         MovieImage(movie.poster_path)
         MovieTitle(movie.title)
