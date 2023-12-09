@@ -2,6 +2,7 @@ package com.example.movieappcompose.ui.screen.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,9 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,7 +40,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
-import com.example.movieappcompose.ui.component.LoadingView
+import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.screen.ScreenRoute
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
@@ -51,29 +49,17 @@ import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 fun HorizontalMovieList(navController: NavHostController, onClick: (Movie) -> Unit) {
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.voteMoviesList.value
+    val loading by viewModel._loading.collectAsState()
+    
+    Box(modifier = Modifier.fillMaxWidth()) {
+        CircularIndeterminateProgressBar(isDisplayed = loading)
 
-    val loading by viewModel.loading.collectAsState()
-
-    when {
-        loading -> LoadingView()
-        //val horizontalMovies = viewModel.voteMoviesList.value
-    }
-
-    var loader by remember { mutableStateOf(false) }
-
-    if (loader) {
-        LoadingView()
-    }
-
-    loader = !loader
-
-    LazyRow(contentPadding = PaddingValues(10.dp)) {
-        itemsIndexed(horizontalMovies) { _, movie ->
-            VoteCountMovieList(navController, movie, onClick)
+        LazyRow(contentPadding = PaddingValues(10.dp)) {
+            itemsIndexed(horizontalMovies) { _, movie ->
+                VoteCountMovieList(navController, movie, onClick)
+            }
         }
     }
-
-    loader = loader
 }
 
 @Composable

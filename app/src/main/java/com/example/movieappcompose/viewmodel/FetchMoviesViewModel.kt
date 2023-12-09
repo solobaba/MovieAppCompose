@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.movieappcompose.model.repository.MovieRepository
 import com.example.movieappcompose.model.response.Movie
 import com.example.movieappcompose.util.SortBy
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -15,18 +16,23 @@ class FetchMoviesViewModel(
     private val repository: MovieRepository = MovieRepository.getInstance()
 ) : ViewModel() {
 
-    private val _loading = MutableStateFlow(false)
+    val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
 
     init {
         viewModelScope.launch {
-            when {}
+            _loading.value = true
+
+            delay(2000)
+
             val voteMovies = fetchMoviesList(SortBy.PopularityDesc, null, 1)
             _loading.value = true
             voteMoviesList.value = voteMovies
 
             val popularMovies = fetchMoviesList(SortBy.VoteCountDesc, null, 1)
             popularMoviesList.value = popularMovies
+
+            _loading.value = false
         }
     }
 
