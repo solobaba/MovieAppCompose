@@ -17,6 +17,7 @@ class FetchMoviesViewModel(
 ) : ViewModel() {
 
     val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
     init {
         viewModelScope.launch {
