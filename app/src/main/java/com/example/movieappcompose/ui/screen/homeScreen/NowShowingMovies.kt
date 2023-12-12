@@ -1,5 +1,6 @@
 package com.example.movieappcompose.ui.screen.homeScreen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,24 +30,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
+import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
-import com.example.movieappcompose.ui.screen.ScreenRoute
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 
 @Composable
-fun HorizontalMovieList(navController: NavHostController, onClick: (Movie) -> Unit) {
+fun HorizontalMovieList(navController: NavController) {
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.voteMoviesList.value
     val loading by viewModel._loading.collectAsState()
@@ -56,56 +57,58 @@ fun HorizontalMovieList(navController: NavHostController, onClick: (Movie) -> Un
 
         LazyRow(contentPadding = PaddingValues(10.dp)) {
             itemsIndexed(horizontalMovies) { _, movie ->
-                VoteCountMovieList(navController, movie, onClick)
+                VoteCountMovieList(navController, movie)
             }
         }
     }
 }
 
 @Composable
-fun VoteCountMovieList(navController: NavHostController, movie: Movie, onClick: (Movie) -> Unit) {
+fun VoteCountMovieList(navController: NavController, movie: Movie) {
     val moviesString = movie.toJson()
+    val mContext = LocalContext.current
     Column(
         modifier = Modifier
             .width(150.dp)
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigate(ScreenRoute.Details.route + moviesString) }
+            .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
-        MovieImage(movie.poster_path)
+        MovieImage(navController, movie.id, movie.poster_path ?: "")
         MovieTitle(movie.title)
         MovieRate(movie.vote_average)
     }
 }
 
 @Composable
-fun MovieImage(posterPath: String) {
+fun MovieImage(navController: NavController, title: Int, posterPath: String) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier
             .wrapContentSize()
-            .clickable { }
+            .clickable { navController.navigateToDetailScreen(title) }
     ) {
-        AsyncImage(
-            modifier = Modifier
-                .height(170.dp)
-                .fillMaxWidth(),
-            model = posterPath,
-            contentScale = ContentScale.Crop,
-            contentDescription = "",
-            placeholder = painterResource(R.drawable.profile_picture)
-        )
-//        Image(
-//            //painter = rememberImagePainter("https://images.unsplash.com/photo-1542178243-bc20204b769f?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fHBvcnRyYWl0fGVufDB8MnwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
-//            painter = rememberImagePainter(posterPath),
+//        AsyncImage(
 //            modifier = Modifier
 //                .height(170.dp)
 //                .fillMaxWidth(),
+//            model = posterPath,
 //            contentScale = ContentScale.Crop,
 //            contentDescription = "",
+//            placeholder = painterResource(R.drawable.profile_picture)
 //        )
+        
+        Image(
+            painter = rememberImagePainter(posterPath),
+            //painter = rememberAsyncImagePainter(posterPath),
+            modifier = Modifier
+                .height(170.dp)
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop,
+            contentDescription = "",
+        )
     }
 }
 

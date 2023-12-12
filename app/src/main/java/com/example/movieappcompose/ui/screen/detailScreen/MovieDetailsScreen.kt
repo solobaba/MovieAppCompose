@@ -1,5 +1,6 @@
 package com.example.movieappcompose.ui.screen.detailScreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,23 +21,34 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.movieappcompose.R
-import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.util.shortToast
+import com.google.gson.Gson
 
 @Composable
-fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
+fun MovieDetailsScreen(
+    movieID: Int?,
+    navController: NavController) {
+    //val viewModel : MovieDetailsViewModel = viewModel()
+    //val movies = viewModel.state.collectAsState().value
+
+    val mContext = LocalContext.current
+    mContext.shortToast(movieID.toString())
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +82,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.dp),
+                        .height(350.dp),
                     model = R.drawable.profile_picture,
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
@@ -79,12 +91,13 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
             }
         }
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(15.dp)
         ) {
             Text(
                 modifier = Modifier.wrapContentSize(),
-                text = movies?.title ?: "Default title",
+                text = "Default title", //movies?.title ?: "Default title",
                 color = Color.DarkGray,
                 textAlign = TextAlign.Start,
                 fontFamily = FontFamily(Font(R.font.mulish_bold)),
@@ -110,7 +123,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
                         .wrapContentSize()
                         .padding(start = 5.dp)
                         .align(Alignment.CenterVertically),
-                    text = movies?.vote_average.toString() ?: "Default count",
+                    text = "Default count", //movies?.vote_average.toString() ?: "Default count",
                     color = Color(0xFF9C9C9C),
                     style = MaterialTheme.typography.headlineMedium,
                     fontFamily = FontFamily(Font(R.font.mulish_regular)),
@@ -129,7 +142,7 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 3.dp),
-                text = movies?.overview ?: "Default overview",
+                text = "Default overview",  //movies?.overview ?: "Default overview",
                 color = Color(0xFF9C9C9C),
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,

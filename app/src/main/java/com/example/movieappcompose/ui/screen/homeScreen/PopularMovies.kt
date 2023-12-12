@@ -43,12 +43,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 
 @Composable
-fun VerticalMovie(navController: NavHostController, navigationCallback: (Int) -> Unit) {
+fun VerticalMovie(navController: NavController) {
     //val scrollState = rememberLazyListState()
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.popularMoviesList.value
@@ -59,21 +59,21 @@ fun VerticalMovie(navController: NavHostController, navigationCallback: (Int) ->
 
         LazyColumn(contentPadding = PaddingValues(10.dp)) {
             items(horizontalMovies) { movie ->
-                PopularMovies(navController, movie, navigationCallback)
+                PopularMovies(navController, movie)
             }
         }
     }
 }
 
 @Composable
-fun PopularMovies(navController: NavHostController, movie: Movie, navigationCallback: (Int) -> Unit) {
+fun PopularMovies(navController: NavController, movie: Movie) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable { navigationCallback.invoke(movie.id) }
+            .clickable {  }
     ) {
-        PopularMovieImage(movie.poster_path)
+        PopularMovieImage(movie.poster_path ?: "")
         MovieTitleOverview(
             movie.title,
             movie.overview,

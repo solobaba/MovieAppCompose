@@ -19,9 +19,9 @@ class MovieRepository(private val movieWebService: MovieWebService = MovieWebSer
         return response
     }
 
-    fun getMeal(id: Int) : Movie? {
+    fun getMeal(title: String) : Movie? {
         return cachedMeals.firstOrNull {
-            it.id == id
+            it.title == title
         }
     }
 
