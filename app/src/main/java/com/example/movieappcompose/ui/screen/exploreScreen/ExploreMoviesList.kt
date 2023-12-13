@@ -34,7 +34,6 @@ fun ExploreMoviesList(navController: NavHostController, id: Int?) {
     }
 }
 
-
 @Composable
 fun MovieList(id: Int?, navController: NavHostController) {
     if (id == 0) {
