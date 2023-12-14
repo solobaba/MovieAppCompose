@@ -43,7 +43,6 @@ fun MoviesHome(
         }
         MoviesHomeList(navController)
     }
-
 }
 
 @Composable

@@ -33,7 +33,7 @@ fun ExploreMoviesList(navController: NavController, id: String?) {
         ) {
             navController.popBackStack()
         }
-        mContext.shortToast(id.toString())
+        //mContext.shortToast(id.toString())
         MovieList(id, navController)
     }
 }

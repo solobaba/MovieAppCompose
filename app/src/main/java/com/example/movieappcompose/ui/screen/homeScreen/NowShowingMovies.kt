@@ -66,7 +66,7 @@ fun HorizontalMovieList(navController: NavController) {
 @Composable
 fun VoteCountMovieList(navController: NavController, movie: Movie) {
     val moviesString = movie.toJson()
-    val mContext = LocalContext.current
+
     Column(
         modifier = Modifier
             .width(150.dp)

@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
 
 @Composable
 fun VerticalMovie(navController: NavController) {
@@ -71,7 +72,7 @@ fun PopularMovies(navController: NavController, movie: Movie) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable {  }
+            .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
         PopularMovieImage(movie.poster_path ?: "")
         MovieTitleOverview(

@@ -1,21 +1,12 @@
 package com.example.movieappcompose.model.network
 
-import android.util.Log
 import com.example.movieappcompose.model.response.DiscoverResult
-import com.example.movieappcompose.model.response.GenreResult
 import com.example.movieappcompose.model.response.MovieDetail
-import com.example.movieappcompose.util.SortBy
-import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
-import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 class MovieWebService {
@@ -50,5 +41,11 @@ class MovieWebService {
         page: Int
     ): DiscoverResult {
         return api.getMovieListAsync(sortBy, withGenres, page)
+    }
+
+    suspend fun getMovieDetails(
+        movieId: Int
+    ): MovieDetail {
+        return api.getMovieDetails(movieId)
     }
 }

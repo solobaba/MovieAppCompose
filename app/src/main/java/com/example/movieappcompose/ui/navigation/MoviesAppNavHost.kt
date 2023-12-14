@@ -2,21 +2,12 @@ package com.example.movieappcompose.ui.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.exploreRoute
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.homeRoute
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.movieDetailsRoute
-import com.example.movieappcompose.ui.screen.ID
 import com.example.movieappcompose.ui.screen.ScreenRoute
-import com.example.movieappcompose.ui.screen.detailScreen.MovieDetailsScreen
-import com.example.movieappcompose.ui.screen.exploreScreen.ExploreMoviesList
-import com.example.movieappcompose.ui.screen.homeScreen.MoviesHome
-import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 
 @Composable
 fun MoviesAppNavHost(innerPadding: PaddingValues) {

@@ -11,20 +11,20 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @Headers(Constants.apiToken)
+    //@Headers(Constants.apiToken)
     @GET("/3/discover/movie")
     suspend fun getMovieListAsync(
         @Query("sort_by") sortBy: String,
         @Query("with_genres") withGenres: String ?= null,
         @Query("page") page: Int,
-        //@Query("api_key") apiKey: String = Constants.apiKey
+        @Query("api_key") apiKey: String = Constants.apiKey
     ): DiscoverResult
 
     @GET("/3/movie/{movieId}")
     suspend fun getMovieDetails(
-        @Path("movieId") movieId: Int = -1,
+        @Path("movieId") movieId: Int = 0,
         @Query("api_key") apiKey: String = Constants.apiKey
-    ): Response<MovieDetail>
+    ): MovieDetail
 
     @GET("/3/genre/movie/list")
     suspend fun getAllGenreList(
