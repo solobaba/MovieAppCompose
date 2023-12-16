@@ -59,14 +59,6 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
                     contentDescription = "Expand row icon",
                     tint = Color(0xFFFFFFFF)
                 )
-//                Image(
-//                    painter = rememberImagePainter(R.drawable.ic_baseline_arrow_back_24),
-//                    modifier = Modifier
-//                        .padding(horizontal = 12.dp)
-//                        .size(20.dp)
-//                        .clickable(onClick = {  }),
-//                    contentDescription = "",
-//                )
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()

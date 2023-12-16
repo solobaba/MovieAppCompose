@@ -19,4 +19,3 @@ class MovieDetailsViewModel(
         movieState.value = repository.getMeal(movieId as Int)
     }
 }
-
