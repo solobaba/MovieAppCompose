@@ -28,12 +28,6 @@ fun MoviesAppNavHost(iconClickAction: (Int) -> Unit) {
             }
         }
 
-//        composable(ScreenRoute.Home.route) {
-//            MoviesHome(navController) { movies_id ->
-//                navController.navigate( "movieDetails/$movies_id")
-//            }
-//        }
-
         composable(ScreenRoute.Explore.route,
             arguments = listOf(navArgument(name = ID) {
                 type = NavType.IntType
@@ -49,15 +43,5 @@ fun MoviesAppNavHost(iconClickAction: (Int) -> Unit) {
             val viewModel : MovieDetailsViewModel = viewModel()
             MovieDetailsScreen(navController, viewModel.movieState.value)
         }
-
-//        composable(ScreenRoute.Details.route,
-//            arguments = listOf(navArgument(name = "moviesString") {
-//                type = NavType.StringType
-//            })) { navBackStackEntry ->
-//            navBackStackEntry.arguments?.getString("moviesString")?.let { jsonString ->
-//                val movies = jsonString .fromJson(Movie::class.java)
-//                MovieDetailsScreen(navController, movies)
-//            }
-//        }
     }
 }
