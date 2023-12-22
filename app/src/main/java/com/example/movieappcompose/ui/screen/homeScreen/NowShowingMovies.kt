@@ -101,7 +101,7 @@ fun MovieImage(navController: NavController, title: Int, posterPath: String) {
 //        )
         
         Image(
-            painter = rememberImagePainter(posterPath),
+            painter = rememberImagePainter(R.drawable.image_2),
             //painter = rememberAsyncImagePainter(posterPath),
             modifier = Modifier
                 .height(170.dp)

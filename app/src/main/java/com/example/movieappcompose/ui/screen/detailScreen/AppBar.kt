@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,8 +65,7 @@ fun CloseIcon(navController: NavController) {
                     maxHeight = Dp.Unspecified
                 )
                 .padding(PaddingValues(8.dp))
-                .clickable { navController.popBackStack() },
-            colorFilter = ColorFilter.tint(Color(0xFFB5B5B5))
+                .clickable { navController.popBackStack() }
         )
         Spacer(
             modifier = Modifier
@@ -87,7 +87,7 @@ fun MovieIDChip(id: Int?) {
             id,
             modifier = Modifier
                 .padding(PaddingValues(vertical = 5.dp, horizontal = 8.dp)),
-            textColor = Color.White.copy(alpha = .7f)
+            textColor = Color.White.copy(alpha = .87f)
         )
         Spacer(
             modifier = Modifier
@@ -109,9 +109,11 @@ fun MovieID(id: Int?, modifier: Modifier, textColor: Color) {
             colorFilter = ColorFilter.tint(Color(0xFFB5B5B5))
         )
         Text(
+            modifier = Modifier.padding(start = 5.dp),
             text = id.toString(),
             fontSize = 12.sp,
-            fontFamily = FontFamily(Font(R.font.mulish_regular)),
+            fontFamily = FontFamily(Font(R.font.mulish_bold)),
+            fontWeight = FontWeight.ExtraBold,
             color = textColor,
         )
     }

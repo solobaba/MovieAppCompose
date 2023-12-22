@@ -98,7 +98,7 @@ fun PopularMovieImage(posterPath: String) {
             modifier = Modifier
                 .height(130.dp)
                 .width(100.dp),
-            model = posterPath,
+            model = R.drawable.image_1, //posterPath,
             contentScale = ContentScale.Crop,
             contentDescription = "",
             placeholder = painterResource(R.drawable.profile_picture)
