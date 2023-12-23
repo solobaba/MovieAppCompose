@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson
@@ -23,12 +24,12 @@ fun MovieDetailsScreen(
     val viewModel: MovieDetailsViewModel = viewModel()
     val loading by viewModel.loading.collectAsState()
 
-    //CircularIndeterminateProgressBar(isDisplayed = loading)
+    CircularIndeterminateProgressBar(isDisplayed = loading)
 
     viewModel.movieID = movieID
 
-    val mContext = LocalContext.current
-    mContext.shortToast(viewModel.movieID.toString())
+    //val mContext = LocalContext.current
+    //mContext.shortToast(viewModel.movieID.toString())
 
     MovieDetailsContent(navController)
 }

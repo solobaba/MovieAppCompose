@@ -31,7 +31,7 @@ data class MovieDetail(
     val original_language: String? = "",
     val original_title: String? = "",
     val overview: String? = "",
-    val popularity: Double? = 0.0,
+    val popularity: Double = 0.0,
     val poster_path: String? = "",
     val production_companies: List<ProductionCompany> = listOf(),
     val production_countries: List<ProductionCountry> = listOf(),

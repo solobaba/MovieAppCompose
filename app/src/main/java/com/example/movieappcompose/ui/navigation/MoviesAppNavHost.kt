@@ -16,31 +16,5 @@ fun MoviesAppNavHost(innerPadding: PaddingValues) {
         homeRoute(navController, innerPadding)
         exploreRoute(navController)
         movieDetailsRoute(navController)
-
-//        composable(ScreenRoute.Home.route) {
-//            MoviesHome(navController) { navigationId ->
-//                if (navigationId == 0 || navigationId == 1) {
-//                    navController.navigate( "explorerMoviesList/$navigationId")
-//                } else {
-//                    navController.navigate( "movieDetails/$navigationId")
-//                }
-//            }
-//        }
-
-//        composable(ScreenRoute.Explore.route,
-//            arguments = listOf(navArgument(name = ID) {
-//                type = NavType.IntType
-//            })) { navBackStackEntry ->
-//            val id = navBackStackEntry.arguments?.getInt(ID)
-//            ExploreMoviesList(navController, id)
-//        }
-
-//        composable(ScreenRoute.Details.route,
-//            arguments = listOf(navArgument(name = "movies_id") {
-//                type = NavType.IntType
-//            })) { navBackStackEntry ->
-//            val viewModel : MovieDetailsViewModel = viewModel()
-//            MovieDetailsScreen(navController, viewModel.movieState.value)
-//        }
     }
 }

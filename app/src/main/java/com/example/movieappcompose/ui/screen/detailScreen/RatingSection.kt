@@ -18,7 +18,7 @@ import com.example.movieappcompose.R
 @Composable
 fun RatingSection(
     modifier: Modifier = Modifier,
-    popularity: Double?,
+    popularity: Double,
     status: String?,
     releaseDate: String?
 ) {
@@ -77,7 +77,7 @@ fun ReleasedDate(releaseDate: String?) {
 }
 
 @Composable
-fun Popularity(popularity: Double?) {
+fun Popularity(popularity: Double) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row() {
             Text(
