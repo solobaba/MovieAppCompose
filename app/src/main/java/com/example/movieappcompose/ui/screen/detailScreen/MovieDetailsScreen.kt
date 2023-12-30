@@ -130,4 +130,3 @@ fun MovieDetailsScreen(navController: NavHostController, movies: Movie?) {
         }
     }
 }
-
