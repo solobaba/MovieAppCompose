@@ -3,7 +3,6 @@ package com.example.movieappcompose.model
 import com.google.gson.annotations.SerializedName
 
 data class Response(
-
 	@field:SerializedName("data")
 	val data: List<DataItem?>? = null,
 
@@ -12,7 +11,6 @@ data class Response(
 )
 
 data class AbilitiesItem(
-
 	@field:SerializedName("displayIcon")
 	val displayIcon: String? = null,
 
@@ -27,7 +25,6 @@ data class AbilitiesItem(
 )
 
 data class Role(
-
 	@field:SerializedName("displayIcon")
 	val displayIcon: String? = null,
 
@@ -45,7 +42,6 @@ data class Role(
 )
 
 data class DataItem(
-
 	@field:SerializedName("killfeedPortrait")
 	val killFeedPortrait: String? = null,
 
@@ -114,7 +110,6 @@ data class DataItem(
 )
 
 data class RecruitmentData(
-
 	@field:SerializedName("levelVpCostOverride")
 	val levelVpCostOverride: Int? = null,
 
