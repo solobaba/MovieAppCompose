@@ -7,15 +7,15 @@ data class Response(
 	val data: List<DataItem?>? = null,
 
 	@field:SerializedName("status")
-	val status: Int? = null
+	val status: Int? = 0
 )
 
 data class AbilitiesItem(
 	@field:SerializedName("displayIcon")
-	val displayIcon: String? = null,
+	val displayIcon: String? = "",
 
 	@field:SerializedName("displayName")
-	val displayName: String? = null,
+	val displayName: String? = "",
 
 	@field:SerializedName("description")
 	val description: String? = null,
