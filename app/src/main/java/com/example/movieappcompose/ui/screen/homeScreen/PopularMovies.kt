@@ -185,8 +185,8 @@ fun MovieTitleOverview(
                     text = releaseDate ?: "Default date",
                     color = Color(0xFF9C9C9C), //Color.DarkGray,
                     style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                    fontSize = 12.sp
+                    fontFamily = FontFamily(Font(R.font.mulish_bold)),
+                    fontSize = 14.sp
                 )
         }
     }
