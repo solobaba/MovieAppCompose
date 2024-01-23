@@ -133,7 +133,7 @@ fun MovieTitleOverview(
             color = Color(0xFF9C9C9C),
             textAlign = TextAlign.Start,
             fontSize = 12.sp,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyLarge,
             overflow = TextOverflow.Ellipsis,
             maxLines = 4
         )
@@ -185,8 +185,8 @@ fun MovieTitleOverview(
                     text = releaseDate ?: "Default date",
                     color = Color(0xFF9C9C9C), //Color.DarkGray,
                     style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_bold)),
-                    fontSize = 14.sp
+                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
+                    fontSize = 12.sp
                 )
         }
     }
