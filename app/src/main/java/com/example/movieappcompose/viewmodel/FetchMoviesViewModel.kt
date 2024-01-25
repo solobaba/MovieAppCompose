@@ -23,7 +23,7 @@ class FetchMoviesViewModel(
         viewModelScope.launch {
             _loading.value = true
 
-            delay(3000)
+            delay(2000)
 
             val voteMovies = fetchMoviesList(SortBy.PopularityDesc, null, 1)
             _loading.value = true
