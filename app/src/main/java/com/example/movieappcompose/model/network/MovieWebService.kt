@@ -38,8 +38,8 @@ class MovieWebService {
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
-            .readTimeout(200, TimeUnit.SECONDS)
-            .connectTimeout(200, TimeUnit.SECONDS)
+            .readTimeout(250, TimeUnit.SECONDS)
+            .connectTimeout(250, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .build()
     }
