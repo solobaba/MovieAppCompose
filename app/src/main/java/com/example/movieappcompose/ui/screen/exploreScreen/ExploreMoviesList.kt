@@ -47,7 +47,6 @@ fun MovieList(id: Int?, navController: NavHostController) {
             LazyColumn(contentPadding = PaddingValues(10.dp)) {
                 items(horizontalMovies) { movie ->
                     PopularMovies(navController, movie) {
-
                     }
                 }
             }
@@ -63,7 +62,6 @@ fun MovieList(id: Int?, navController: NavHostController) {
             LazyColumn(contentPadding = PaddingValues(10.dp)) {
                 items(horizontalMovies) { movie ->
                     PopularMovies(navController, movie) {
-
                     }
                 }
             }

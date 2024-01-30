@@ -41,7 +41,6 @@ fun MoviesHome(
         }
         MoviesHomeList(navController, navigationCallback, iconClickAction)
     }
-
 }
 
 @Composable
@@ -58,7 +57,6 @@ fun NowShowingMoviesList(
 ) {
     NowShowingHeader(navigationCallback, iconClickAction)
     HorizontalMovieList(navController) {
-
     }
 }
 
