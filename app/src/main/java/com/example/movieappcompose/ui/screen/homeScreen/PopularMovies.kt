@@ -50,7 +50,6 @@ import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetai
 
 @Composable
 fun VerticalMovie(navController: NavController) {
-    //val scrollState = rememberLazyListState()
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.popularMoviesList.value
     val loading by viewModel._loading.collectAsState()
