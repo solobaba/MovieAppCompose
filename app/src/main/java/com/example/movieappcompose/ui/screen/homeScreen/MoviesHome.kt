@@ -87,7 +87,7 @@ fun NowShowingHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int) -
                     .align(Alignment.CenterEnd),
                 onClick = { iconClickAction.invoke(0) },
                 border = BorderStroke(
-                    width = 1.dp,
+                    width = 2.dp,
                     color = Color.LightGray
                 )
             ) {
