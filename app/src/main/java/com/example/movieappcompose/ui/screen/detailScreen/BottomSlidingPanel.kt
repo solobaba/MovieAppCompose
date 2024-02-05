@@ -1,5 +1,7 @@
 package com.example.movieappcompose.ui.screen.detailScreen
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -19,6 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -31,7 +41,7 @@ import com.example.movieappcompose.model.response.Genre
 @Composable
 fun BottomSlidingPanel(
     genres: List<Genre>,
-    title: String?,
+    title: String,
     overview: String?,
     popularity: Double,
     status: String?,
@@ -57,21 +67,30 @@ fun BottomSlidingPanel(
             RatingSection(modifier = Modifier.padding(PaddingValues(horizontal = 50.dp)),
                 popularity, status, releaseDate)
             MovieTitle(title)
-            //Genres(genres)
+            Genres(genres)
+            CastSection(
+                actorsImages = listOf(
+                    R.drawable.image_1,
+                    R.drawable.image_2,
+                    R.drawable.image_3,
+                    R.drawable.image_4,
+                    R.drawable.image_5,
+                    R.drawable.image_6,
+                    R.drawable.image_7,
+                    R.drawable.image_8,
+                    R.drawable.image_9
+                ),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            )
+            MovieDescription(overview ?: "")
+            ItemButton(
+                onClick = {},
+                text = stringResource(R.string.booking),
+                textColor = Color.White,
+                iconResource = R.drawable.ic_card, iconColor = Color.White.copy(alpha = .87f),
+                modifier = Modifier.padding(bottom = 32.dp + 16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
         }
     }
-}
-
-@Composable
-fun MovieTitle(title: String?) {
-    Text(
-        text = title ?: "",
-        color = Color.LightGray,
-        fontFamily = FontFamily(Font(R.font.mulish_bold)),
-        fontSize = 24.sp,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(horizontal = 50.dp)
-    )
 }

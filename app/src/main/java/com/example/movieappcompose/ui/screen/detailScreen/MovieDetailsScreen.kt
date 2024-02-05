@@ -49,7 +49,7 @@ fun MovieDetailsContent(navController: NavController) {
         )
         BottomSlidingPanel(
             movieDetails.genres,
-            movieDetails.title,
+            movieDetails.title ?: "Title",
             movieDetails.overview,
             movieDetails.popularity,
             movieDetails.status,
