@@ -24,8 +24,8 @@ fun CircularIndeterminateProgressBar(
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.size(size = 40.dp),
-                color = Color.Magenta,
-                strokeWidth = 2.dp
+                color = Color.Blue,
+                strokeWidth = 10.dp
             )// provided by compose library
         }
     }

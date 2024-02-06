@@ -43,21 +43,28 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.model.response.Movie
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
+import com.example.movieappcompose.util.NetworkUtils
+import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 
 @Composable
 fun HorizontalMovieList(navController: NavController) {
-    val viewModel: FetchMoviesViewModel = viewModel()
-    val horizontalMovies = viewModel.voteMoviesList.value
-    val loading by viewModel._loading.collectAsState()
-    
-    Box(modifier = Modifier.fillMaxWidth()) {
-        CircularIndeterminateProgressBar(isDisplayed = loading)
+    val context = LocalContext.current
+    if (!NetworkUtils.isNetworkAvailable(context)) {
+        context.shortToast("Network not available, please check your internet connection")
+    } else {
+        val viewModel: FetchMoviesViewModel = viewModel()
+        val horizontalMovies = viewModel.voteMoviesList.value
+        val loading by viewModel._loading.collectAsState()
 
-        LazyRow(contentPadding = PaddingValues(10.dp)) {
-            itemsIndexed(horizontalMovies) { _, movie ->
-                VoteCountMovieList(navController, movie)
+        Box(modifier = Modifier.fillMaxWidth()) {
+            CircularIndeterminateProgressBar(isDisplayed = loading)
+
+            LazyRow(contentPadding = PaddingValues(10.dp)) {
+                itemsIndexed(horizontalMovies) { _, movie ->
+                    VoteCountMovieList(navController, movie)
+                }
             }
         }
     }
@@ -81,7 +88,7 @@ fun VoteCountMovieList(navController: NavController, movie: Movie) {
 }
 
 @Composable
-fun MovieImage(navController: NavController, title: Int, posterPath: String) {
+fun MovieImage(navController: NavController, title: Long, posterPath: String) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),

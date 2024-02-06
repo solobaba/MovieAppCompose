@@ -23,7 +23,7 @@ fun MovieTitle(
             .wrapContentSize()
             .padding(top = 20.dp, start = 50.dp, end = 50.dp),
         text = title,
-        color = Color.Gray,
+        color = Color.LightGray,
         fontFamily = FontFamily(Font(R.font.mulish_bold)),
         fontSize = 24.sp,
         maxLines = 2,

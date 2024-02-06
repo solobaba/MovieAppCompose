@@ -19,13 +19,12 @@ import com.example.movieappcompose.R
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.screen.homeScreen.PopularMovies
+import com.example.movieappcompose.util.NetworkUtils
 import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.viewmodel.ExploreMoviesViewModel
 
 @Composable
 fun ExploreMoviesList(navController: NavController, id: String?) {
-    val mContext = LocalContext.current
-
     Column {
         Toolbar(
             title = "Explore",
@@ -33,39 +32,42 @@ fun ExploreMoviesList(navController: NavController, id: String?) {
         ) {
             navController.popBackStack()
         }
-        //mContext.shortToast(id.toString())
         MovieList(id, navController)
     }
 }
 
 @Composable
 fun MovieList(id: String?, navController: NavController) {
-    if (id == "0") {
+    val mContext = LocalContext.current
+    if (!NetworkUtils.isNetworkAvailable(mContext)) {
+        mContext.shortToast("Network not available, please check your internet connection")
+    } else {
+        if (id == "0") {
+            val viewModel: ExploreMoviesViewModel = viewModel()
+            val horizontalMovies = viewModel.voteMoviesList.value
+            val loading by viewModel._loading.collectAsState()
 
-        val viewModel: ExploreMoviesViewModel = viewModel()
-        val horizontalMovies = viewModel.voteMoviesList.value
-        val loading by viewModel._loading.collectAsState()
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularIndeterminateProgressBar(isDisplayed = loading)
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularIndeterminateProgressBar(isDisplayed = loading)
-
-            LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                items(horizontalMovies) { movie ->
-                    PopularMovies(navController, movie)
+                LazyColumn(contentPadding = PaddingValues(10.dp)) {
+                    items(horizontalMovies) { movie ->
+                        PopularMovies(navController, movie)
+                    }
                 }
             }
-        }
-    } else {
-        val viewModel: ExploreMoviesViewModel = viewModel()
-        val horizontalMovies = viewModel.popularMoviesList.value
-        val loading by viewModel._loading.collectAsState()
+        } else {
+            val viewModel: ExploreMoviesViewModel = viewModel()
+            val horizontalMovies = viewModel.popularMoviesList.value
+            val loading by viewModel._loading.collectAsState()
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularIndeterminateProgressBar(isDisplayed = loading)
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularIndeterminateProgressBar(isDisplayed = loading)
 
-            LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                items(horizontalMovies) { movie ->
-                    PopularMovies(navController, movie)
+                LazyColumn(contentPadding = PaddingValues(10.dp)) {
+                    items(horizontalMovies) { movie ->
+                        PopularMovies(navController, movie)
+                    }
                 }
             }
         }

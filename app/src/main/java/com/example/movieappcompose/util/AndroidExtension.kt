@@ -1,9 +1,20 @@
 package com.example.movieappcompose.util
 
 import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 fun logTrace(text: String) =  Log.d("Smartx", text)
 
@@ -17,11 +28,6 @@ fun <A> A.toJson(): String? {
     return Gson().toJson(this)
 }
 
-// Function to generate a Toast
-fun mToast(context: Context){
-    Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
-}
-
 /**
  * Shows a short Toast with a String Parameter.
  */
@@ -29,6 +35,76 @@ fun Context.shortToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
 
+fun Context.longToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+}
+
 fun Context.shortIntToast(msg: Int) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
+
+object NetworkUtils {
+    @JvmStatic
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnectedOrConnecting
+    }
+}
+
+fun Context.showSnackBar(msg: String) {
+}
+
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SnackbarDemo() {
+//    val scaffoldState = rememberScaffoldState() // this contains the `SnackbarHostState`
+//    val coroutineScope = rememberCoroutineScope()
+//
+//    Scaffold(
+//        modifier = Modifier,
+//        scaffoldState = scaffoldState // attaching `scaffoldState` to the `Scaffold`
+//    ) {
+//        Button(
+//            onClick = {
+//                coroutineScope.launch { // using the `coroutineScope` to `launch` showing the snackbar
+//                    // taking the `snackbarHostState` from the attached `scaffoldState`
+//                    val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+//                        message = "This is your message",
+//                        actionLabel = "Do something."
+//                    )
+//                    when (snackbarResult) {
+//                        SnackbarResult.Dismissed -> Log.d("SnackbarDemo", "Dismissed")
+//                        SnackbarResult.ActionPerformed -> Log.d("SnackbarDemo", "Snackbar's button clicked")
+//                    }
+//                }
+//            }
+//        ) {
+//            Text(text = "A button that shows a Snackbar")
+//        }
+//    }
+//}
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SnackBarDemo() {
+//    val scaffoldState: ScaffoldState = rememberScaffoldState()
+//    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+//
+//    Scaffold(scaffoldState = scaffoldState) {
+//        Button(onClick = {
+//            coroutineScope.launch {
+//                val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+//                    message = msg,
+//                    actionLabel = "Do something"
+//                )
+//                when (snackbarResult) {
+//                    SnackbarResult.Dismissed -> TODO()
+//                    SnackbarResult.ActionPerformed -> TODO()
+//                }
+//            }
+//        }) {
+//            Text(text = "Click me!")
+//        }
+//    }
+//}

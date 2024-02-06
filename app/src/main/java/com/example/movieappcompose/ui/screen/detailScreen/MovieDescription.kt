@@ -20,7 +20,7 @@ fun MovieDescription(overview: String) {
         modifier = Modifier.padding(top = 20.dp, start = 30.dp, end = 30.dp),
         text = overview,
         color = Color.Gray,
-        fontSize = 14.sp,
+        fontSize = 12.sp,
         style = MaterialTheme.typography.bodySmall,
         maxLines = 4,
         overflow = TextOverflow.Ellipsis,

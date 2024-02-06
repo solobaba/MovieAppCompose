@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieappcompose.R
+import com.example.movieappcompose.util.longToast
 import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson
 
@@ -35,7 +36,8 @@ fun UpperSection(
     navController: NavController,
     backdropPath: String?,
     homepage: String?,
-    id: Int?
+    id: Int?,
+    title: String
 ) {
     val viewModel: MovieDetailsViewModel = viewModel()
     val movieDetails = viewModel.movieDetails.value
@@ -54,11 +56,15 @@ fun UpperSection(
             modifier = Modifier
                 .align(Alignment.Center)
                 .clickable {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(homepage)
-                    )
-                    startActivity(context, intent, null)
+                    if (homepage == "" || homepage == null) {
+                        context.longToast("$title trailer is not available")
+                    } else {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(homepage)
+                        )
+                        startActivity(context, intent, null)
+                    }
                 }
         )
     }

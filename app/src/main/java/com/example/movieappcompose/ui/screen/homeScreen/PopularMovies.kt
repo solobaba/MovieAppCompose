@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -47,19 +48,27 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
+import com.example.movieappcompose.util.NetworkUtils
+import com.example.movieappcompose.util.shortToast
 
 @Composable
 fun VerticalMovie(navController: NavController) {
-    val viewModel: FetchMoviesViewModel = viewModel()
-    val horizontalMovies = viewModel.popularMoviesList.value
-    val loading by viewModel._loading.collectAsState()
+    val context = LocalContext.current
+    if (!NetworkUtils.isNetworkAvailable(context)) {
+        context.shortToast("Network not available, please check your internet connection")
+    } else {
+        val viewModel: FetchMoviesViewModel = viewModel()
+        val horizontalMovies = viewModel.popularMoviesList.value
+        val loading by viewModel._loading.collectAsState()
 
-    Box(modifier = Modifier.fillMaxHeight()) {
-        CircularIndeterminateProgressBar(isDisplayed = loading)
 
-        LazyColumn(contentPadding = PaddingValues(10.dp)) {
-            items(horizontalMovies) { movie ->
-                PopularMovies(navController, movie)
+        Box(modifier = Modifier.fillMaxHeight()) {
+            CircularIndeterminateProgressBar(isDisplayed = loading)
+
+            LazyColumn(contentPadding = PaddingValues(10.dp)) {
+                items(horizontalMovies) { movie ->
+                    PopularMovies(navController, movie)
+                }
             }
         }
     }
@@ -73,7 +82,7 @@ fun PopularMovies(navController: NavController, movie: Movie) {
             .padding(10.dp)
             .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
-        PopularMovieImage(movie.poster_path ?: "")
+        PopularMovieImage(navController, movie)
         MovieTitleOverview(
             movie.title,
             movie.overview,
@@ -84,20 +93,20 @@ fun PopularMovies(navController: NavController, movie: Movie) {
 }
 
 @Composable
-fun PopularMovieImage(posterPath: String) {
+fun PopularMovieImage(navController: NavController, movie: Movie) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier
             .wrapContentSize()
-            .clickable { }
+            .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
         AsyncImage(
             modifier = Modifier
                 .height(130.dp)
                 .width(100.dp),
-            model = R.drawable.image_1, //posterPath,
+            model = R.drawable.image_1, //movie.poster_path ?: "",
             contentScale = ContentScale.Crop,
             contentDescription = "",
             placeholder = painterResource(R.drawable.profile_picture)

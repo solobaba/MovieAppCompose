@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
+import com.example.movieappcompose.util.NetworkUtils
 import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson
@@ -21,31 +22,35 @@ fun MovieDetailsScreen(
     movieID: Int,
     navController: NavController
 ) {
-    val viewModel: MovieDetailsViewModel = viewModel()
-    val loading by viewModel.loading.collectAsState()
+    val context = LocalContext.current
+    if (!NetworkUtils.isNetworkAvailable(context)) {
+        context.shortToast("Network not available, please check your internet connection")
+    } else {
+        val viewModel: MovieDetailsViewModel = viewModel()
+        viewModel.movieID = movieID
 
-    CircularIndeterminateProgressBar(isDisplayed = loading)
+        //val mContext = LocalContext.current
+        //mContext.shortToast(viewModel.movieID.toString())
 
-    viewModel.movieID = movieID
-
-    //val mContext = LocalContext.current
-    //mContext.shortToast(viewModel.movieID.toString())
-
-    MovieDetailsContent(navController)
+        MovieDetailsContent(navController)
+    }
 }
 
 @Composable
 fun MovieDetailsContent(navController: NavController) {
     val viewModel: MovieDetailsViewModel = viewModel()
+    val loading by viewModel.loading.collectAsState()
     val movieDetails = viewModel.movieDetails.value
     Log.d("DetailsMovie", Gson().toJson(movieDetails))
 
     Box(modifier = Modifier.fillMaxSize()) {
+        CircularIndeterminateProgressBar(isDisplayed = loading)
         UpperSection(
             navController,
             movieDetails.backdrop_path,
             movieDetails.homepage,
-            movieDetails.id
+            movieDetails.id,
+            movieDetails.title ?: ""
         )
         BottomSlidingPanel(
             movieDetails.genres,

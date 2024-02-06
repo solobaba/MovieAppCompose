@@ -26,7 +26,6 @@ import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToExploreScreen
-import com.example.movieappcompose.util.shortToast
 
 @Composable
 fun MoviesHome(

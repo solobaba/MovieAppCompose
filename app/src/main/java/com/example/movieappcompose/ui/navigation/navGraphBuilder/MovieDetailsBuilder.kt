@@ -9,7 +9,7 @@ import com.example.movieappcompose.ui.screen.detailScreen.MovieDetailsScreen
 
 private const val ROUTE = "movieDetails"
 
-fun NavController.navigateToDetailScreen(movieID: Int) {
+fun NavController.navigateToDetailScreen(movieID: Long) {
     navigate("$ROUTE/$movieID")
 }
 

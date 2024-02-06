@@ -36,8 +36,8 @@ data class MovieDetail(
     val production_companies: List<ProductionCompany> = listOf(),
     val production_countries: List<ProductionCountry> = listOf(),
     val release_date: String? = "",
-    val revenue: Int? = 0,
-    val runtime: Int? = 0,
+    val revenue: Long? = 0,
+    val runtime: Long? = 0,
     val spoken_languages: List<SpokenLanguage> = listOf(),
     val status: String? = "",
     val tagline: String? = "",
@@ -50,7 +50,7 @@ data class MovieDetail(
 @Parcelize
 data class BelongsToCollection(
     val backdrop_path: String? = "",
-    val id: Int? = 0,
+    val id: Long? = 0,
     val name: String? = "",
     val poster_path: String? = ""
 ): Parcelable
