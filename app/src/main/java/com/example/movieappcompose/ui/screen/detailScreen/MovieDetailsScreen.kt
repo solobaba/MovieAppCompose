@@ -29,9 +29,6 @@ fun MovieDetailsScreen(
         val viewModel: MovieDetailsViewModel = viewModel()
         viewModel.movieID = movieID
 
-        //val mContext = LocalContext.current
-        //mContext.shortToast(viewModel.movieID.toString())
-
         MovieDetailsContent(navController)
     }
 }
