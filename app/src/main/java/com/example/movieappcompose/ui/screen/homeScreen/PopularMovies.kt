@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -61,8 +63,10 @@ fun VerticalMovie(navController: NavController) {
         val horizontalMovies = viewModel.popularMoviesList.value
         val loading by viewModel._loading.collectAsState()
 
-
-        Box(modifier = Modifier.fillMaxHeight()) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+        ) {
             CircularIndeterminateProgressBar(isDisplayed = loading)
 
             LazyColumn(contentPadding = PaddingValues(10.dp)) {
@@ -153,50 +157,50 @@ fun MovieTitleOverview(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(18.dp),
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = "Expand row icon",
-                    tint = Color(0xFFFFC319)
-                )
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 5.dp)
-                        .align(Alignment.CenterVertically),
-                    text = voteAverage.toString() ?: "Default count",
-                    color = Color(0xFF9C9C9C), //Color.DarkGray,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                    fontSize = 12.sp
-                )
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .size(18.dp),
+                imageVector = Icons.Filled.Star,
+                contentDescription = "Expand row icon",
+                tint = Color(0xFFFFC319)
+            )
+            Text(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(start = 5.dp)
+                    .align(Alignment.CenterVertically),
+                text = voteAverage.toString() ?: "Default count",
+                color = Color(0xFF9C9C9C), //Color.DarkGray,
+                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = FontFamily(Font(R.font.mulish_regular)),
+                fontSize = 12.sp
+            )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp)
         ) {
-                Image(
-                    painter = rememberImagePainter(R.drawable.ic_baseline_access_time_24),
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .size(15.dp),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                )
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 5.dp)
-                        .align(Alignment.CenterVertically),
-                    text = releaseDate ?: "Default date",
-                    color = Color(0xFF9C9C9C), //Color.DarkGray,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                    fontSize = 12.sp
-                )
+            Image(
+                painter = rememberImagePainter(R.drawable.ic_baseline_access_time_24),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .size(15.dp),
+                contentScale = ContentScale.Crop,
+                contentDescription = "",
+            )
+            Text(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(start = 5.dp)
+                    .align(Alignment.CenterVertically),
+                text = releaseDate ?: "Default date",
+                color = Color(0xFF9C9C9C), //Color.DarkGray,
+                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = FontFamily(Font(R.font.mulish_regular)),
+                fontSize = 12.sp
+            )
         }
     }
 }
