@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,37 +46,46 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.movieappcompose.model.network.Constants
+import com.example.movieappcompose.model.network.MovieWebService
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
+import com.example.movieappcompose.util.NetworkUtils
+import com.example.movieappcompose.util.shortToast
 
 @Composable
-fun VerticalMovie(navController: NavHostController, navigationCallback: (Int) -> Unit) {
-    //val scrollState = rememberLazyListState()
+fun VerticalMovie(navController: NavController) {
+    val context = LocalContext.current
+
     val viewModel: FetchMoviesViewModel = viewModel()
     val horizontalMovies = viewModel.popularMoviesList.value
     val loading by viewModel._loading.collectAsState()
 
-    Box(modifier = Modifier.fillMaxHeight()) {
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
+    ) {
         CircularIndeterminateProgressBar(isDisplayed = loading)
 
         LazyColumn(contentPadding = PaddingValues(10.dp)) {
             items(horizontalMovies) { movie ->
-                PopularMovies(navController, movie, navigationCallback)
+                PopularMovies(navController, movie)
             }
         }
     }
 }
 
 @Composable
-fun PopularMovies(navController: NavHostController, movie: Movie, navigationCallback: (Int) -> Unit) {
+fun PopularMovies(navController: NavController, movie: Movie) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable { navigationCallback.invoke(movie.id) }
+            .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
-        PopularMovieImage(movie.poster_path)
+        PopularMovieImage(navController, movie)
         MovieTitleOverview(
             movie.title,
             movie.overview,
@@ -84,20 +96,20 @@ fun PopularMovies(navController: NavHostController, movie: Movie, navigationCall
 }
 
 @Composable
-fun PopularMovieImage(posterPath: String) {
+fun PopularMovieImage(navController: NavController, movie: Movie) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier
             .wrapContentSize()
-            .clickable { }
+            .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
         AsyncImage(
             modifier = Modifier
                 .height(130.dp)
                 .width(100.dp),
-            model = posterPath,
+            model = (Constants.IMAGE_BASE_URL + movie.backdrop_path) ?: "", //R.drawable.image_1,
             contentScale = ContentScale.Crop,
             contentDescription = "",
             placeholder = painterResource(R.drawable.profile_picture)
@@ -144,50 +156,50 @@ fun MovieTitleOverview(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-                Icon(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(18.dp),
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = "Expand row icon",
-                    tint = Color(0xFFFFC319)
-                )
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 5.dp)
-                        .align(Alignment.CenterVertically),
-                    text = voteAverage.toString() ?: "Default count",
-                    color = Color(0xFF9C9C9C), //Color.DarkGray,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                    fontSize = 12.sp
-                )
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .size(18.dp),
+                imageVector = Icons.Filled.Star,
+                contentDescription = "Expand row icon",
+                tint = Color(0xFFFFC319)
+            )
+            Text(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(start = 5.dp)
+                    .align(Alignment.CenterVertically),
+                text = voteAverage.toString() ?: "Default count",
+                color = Color(0xFF9C9C9C), //Color.DarkGray,
+                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = FontFamily(Font(R.font.mulish_regular)),
+                fontSize = 12.sp
+            )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp)
         ) {
-                Image(
-                    painter = rememberImagePainter(R.drawable.ic_baseline_access_time_24),
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .size(15.dp),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                )
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(start = 5.dp)
-                        .align(Alignment.CenterVertically),
-                    text = releaseDate ?: "Default date",
-                    color = Color(0xFF9C9C9C), //Color.DarkGray,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                    fontSize = 12.sp
-                )
+            Image(
+                painter = rememberImagePainter(R.drawable.ic_baseline_access_time_24),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .size(15.dp),
+                contentScale = ContentScale.Crop,
+                contentDescription = "",
+            )
+            Text(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(start = 5.dp)
+                    .align(Alignment.CenterVertically),
+                text = releaseDate ?: "Default date",
+                color = Color(0xFF9C9C9C), //Color.DarkGray,
+                style = MaterialTheme.typography.headlineMedium,
+                fontFamily = FontFamily(Font(R.font.mulish_regular)),
+                fontSize = 12.sp
+            )
         }
     }
 }

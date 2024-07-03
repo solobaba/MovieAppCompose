@@ -1,31 +1,34 @@
 package com.example.movieappcompose.model.network
 
-import android.util.Log
 import com.example.movieappcompose.model.response.DiscoverResult
-import com.example.movieappcompose.model.response.GenreResult
 import com.example.movieappcompose.model.response.MovieDetail
-import com.example.movieappcompose.util.SortBy
-import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 class MovieWebService {
 
     private var api: ApiService
+    private val moshi: Moshi? = null
+        //Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+    private fun provideMoshi(): Moshi {
+        synchronized(this) {
+            return moshi ?: Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        }
+    }
 
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(provideMoshi()))
+            //.addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(getClient())
             .build()
@@ -50,5 +53,11 @@ class MovieWebService {
         page: Int
     ): DiscoverResult {
         return api.getMovieListAsync(sortBy, withGenres, page)
+    }
+
+    suspend fun getMovieDetails(
+        movieId: Int
+    ): MovieDetail {
+        return api.getMovieDetails(movieId)
     }
 }

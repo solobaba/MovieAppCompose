@@ -8,27 +8,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.ui.component.Toolbar
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToExploreScreen
+import com.example.movieappcompose.util.NetworkUtils
 
 @Composable
 fun MoviesHome(
-    navController: NavHostController,
-    navigationCallback: (Int) -> Unit,
-    iconClickAction: (Int) -> Unit
+    navController: NavController
 ) {
     Column(
         modifier = Modifier
@@ -39,29 +41,26 @@ fun MoviesHome(
             icon = rememberImagePainter(R.drawable.ic_baseline_movie_filter_24)
         ) {
         }
-        MoviesHomeList(navController, navigationCallback, iconClickAction)
+        MoviesHomeList(navController)
     }
 }
 
 @Composable
-fun MoviesHomeList(navController: NavHostController, navigationCallback: (Int) -> Unit, iconClickAction: (Int) -> Unit) {
-    NowShowingMoviesList(navController, navigationCallback, iconClickAction)
-    PopularMoviesList(navController, navigationCallback, iconClickAction)
+fun MoviesHomeList(navController: NavController) {
+    NowShowingMoviesList(navController)
+    PopularMoviesList(navController)
 }
 
 @Composable
 fun NowShowingMoviesList(
-    navController: NavHostController,
-    navigationCallback: (Int) -> Unit,
-    iconClickAction: (Int) -> Unit
+    navController: NavController
 ) {
-    NowShowingHeader(navigationCallback, iconClickAction)
-    HorizontalMovieList(navController) {
-    }
+    NowShowingHeader(navController)
+    HorizontalMovieList(navController)
 }
 
 @Composable
-fun NowShowingHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int) -> Unit) {
+fun NowShowingHeader(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -85,7 +84,7 @@ fun NowShowingHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int) -
                 modifier = Modifier
                     .padding(2.dp)
                     .align(Alignment.CenterEnd),
-                onClick = { iconClickAction.invoke(0) },
+                onClick = { navController.navigateToExploreScreen("0") },
                 border = BorderStroke(
                     width = 2.dp,
                     color = Color.LightGray
@@ -102,16 +101,14 @@ fun NowShowingHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int) -
 
 @Composable
 fun PopularMoviesList(
-    navController: NavHostController,
-    navigationCallback: (Int) -> Unit,
-    iconClickAction: (Int) -> Unit
+    navController: NavController
 ) {
-    PopularMoviesHeader(navigationCallback, iconClickAction)
-    VerticalMovie(navController, navigationCallback)
+    PopularMoviesHeader(navController)
+    VerticalMovie(navController)
 }
 
 @Composable
-fun PopularMoviesHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int) -> Unit) {
+fun PopularMoviesHeader(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,7 +131,7 @@ fun PopularMoviesHeader(navigationCallback: (Int) -> Unit, iconClickAction: (Int
                 modifier = Modifier
                     .padding(2.dp)
                     .align(Alignment.CenterEnd),
-                onClick = { iconClickAction.invoke(1) },
+                onClick = { navController.navigateToExploreScreen("1") },
                 border = BorderStroke(
                     width = 1.dp,
                     color = Color.LightGray

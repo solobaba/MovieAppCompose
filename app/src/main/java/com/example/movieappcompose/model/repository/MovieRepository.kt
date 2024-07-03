@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.movieappcompose.model.network.MovieWebService
 import com.example.movieappcompose.model.response.DiscoverResult
 import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.model.response.MovieDetail
 import com.example.movieappcompose.util.SortBy
 import com.google.gson.Gson
 
@@ -12,17 +13,25 @@ class MovieRepository(private val movieWebService: MovieWebService = MovieWebSer
 ) {
     private var cachedMeals = listOf<Movie>()
 
-    suspend fun fetchMovies(sortBy: SortBy, withGenres: String?, page: Int): DiscoverResult {
+    suspend fun fetchMovies(
+        sortBy: SortBy,
+        withGenres: String?,
+        page: Int
+    ): DiscoverResult {
         val response = movieWebService.getMovieListAsync(sortBy.notation, withGenres, page)
         cachedMeals = response.results
         Log.d("RepoServices", Gson().toJson(movieWebService.getMovieListAsync(sortBy.notation, withGenres, page)))
         return response
     }
 
-    fun getMeal(id: Int) : Movie? {
+    fun getMeal(title: String) : Movie? {
         return cachedMeals.firstOrNull {
-            it.id == id
+            it.title == title
         }
+    }
+
+    suspend fun getMovieDetails(movieID: Int): MovieDetail {
+        return movieWebService.getMovieDetails(movieID)
     }
 
     companion object {

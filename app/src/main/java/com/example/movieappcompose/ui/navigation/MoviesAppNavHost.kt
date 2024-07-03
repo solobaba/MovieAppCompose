@@ -1,47 +1,56 @@
 package com.example.movieappcompose.ui.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.movieappcompose.ui.screen.ID
+import com.example.movieappcompose.R
+import com.example.movieappcompose.ui.component.RetryItem
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.exploreRoute
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.homeRoute
+import com.example.movieappcompose.ui.navigation.navGraphBuilder.movieDetailsRoute
 import com.example.movieappcompose.ui.screen.ScreenRoute
-import com.example.movieappcompose.ui.screen.detailScreen.MovieDetailsScreen
-import com.example.movieappcompose.ui.screen.exploreScreen.ExploreMoviesList
-import com.example.movieappcompose.ui.screen.homeScreen.MoviesHome
-import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
+import com.example.movieappcompose.util.NetworkUtils
+import com.example.movieappcompose.util.shortToast
 
 @Composable
-fun MoviesAppNavHost(iconClickAction: (Int) -> Unit) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
-        composable(ScreenRoute.Home.route) {
-            MoviesHome(navController, iconClickAction) { navigationId ->
-                if (navigationId == 0 || navigationId == 1) {
-                    navController.navigate( "explorerMoviesList/$navigationId")
-                } else {
-                    navController.navigate( "movieDetails/$navigationId")
-                }
+fun MoviesAppNavHost(
+    navController: NavHostController,
+    innerPadding: PaddingValues,
+    onClickButton: () -> Unit
+) {
+    val context = LocalContext.current
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        if (!NetworkUtils.isNetworkAvailable(context)) {
+            //context.shortToast("Network not available, please check your internet connection")
+
+            RetryItem(
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(40.dp),
+                message = stringResource(id = R.string.check_your_internet_connection),
+                onClick = onClickButton
+            )
+        } else {
+            //val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
+                homeRoute(navController, innerPadding)
+                exploreRoute(navController)
+                movieDetailsRoute(navController)
             }
-        }
-
-        composable(ScreenRoute.Explore.route,
-            arguments = listOf(navArgument(name = ID) {
-                type = NavType.IntType
-            })) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getInt(ID)
-            ExploreMoviesList(navController, id)
-        }
-
-        composable(ScreenRoute.Details.route,
-            arguments = listOf(navArgument(name = "movies_id") {
-                type = NavType.IntType
-            })) { navBackStackEntry ->
-            val viewModel : MovieDetailsViewModel = viewModel()
-            MovieDetailsScreen(navController, viewModel.movieState.value)
         }
     }
 }
