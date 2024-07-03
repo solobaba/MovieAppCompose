@@ -1,6 +1,5 @@
 package com.example.movieappcompose.ui.screen.homeScreen
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +26,7 @@ import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToExploreScreen
+import com.example.movieappcompose.util.NetworkUtils
 
 @Composable
 fun MoviesHome(

@@ -1,6 +1,5 @@
 package com.example.movieappcompose.ui.screen.homeScreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -38,33 +38,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
 import com.example.movieappcompose.R
+import com.example.movieappcompose.model.network.Constants
 import com.example.movieappcompose.model.response.Movie
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
+import com.example.movieappcompose.ui.component.RetryItem
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
 import com.example.movieappcompose.util.NetworkUtils
 import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
+import java.net.URL
+import java.net.URLEncoder
 
 @Composable
 fun HorizontalMovieList(navController: NavController) {
-    val context = LocalContext.current
-    if (!NetworkUtils.isNetworkAvailable(context)) {
-        context.shortToast("Network not available, please check your internet connection")
-    } else {
-        val viewModel: FetchMoviesViewModel = viewModel()
-        val horizontalMovies = viewModel.voteMoviesList.value
-        val loading by viewModel._loading.collectAsState()
+    val viewModel: FetchMoviesViewModel = viewModel()
+    val horizontalMovies = viewModel.voteMoviesList.value
+    val loading by viewModel._loading.collectAsState()
 
-        Box(modifier = Modifier.fillMaxWidth()) {
-            CircularIndeterminateProgressBar(isDisplayed = loading)
+    Box(modifier = Modifier.fillMaxWidth()) {
+        CircularIndeterminateProgressBar(isDisplayed = loading)
 
-            LazyRow(contentPadding = PaddingValues(10.dp)) {
-                itemsIndexed(horizontalMovies) { _, movie ->
-                    VoteCountMovieList(navController, movie)
-                }
+        LazyRow(contentPadding = PaddingValues(10.dp)) {
+            itemsIndexed(horizontalMovies) { _, movie ->
+                VoteCountMovieList(navController, movie)
             }
         }
     }
@@ -81,14 +82,14 @@ fun VoteCountMovieList(navController: NavController, movie: Movie) {
             .padding(10.dp)
             .clickable { navController.navigateToDetailScreen(movie.id) }
     ) {
-        MovieImage(navController, movie.id, movie.poster_path ?: "")
+        MovieImage(navController, movie.id, movie.backdrop_path ?: "")
         MovieTitle(movie.title)
         MovieRate(movie.vote_average)
     }
 }
 
 @Composable
-fun MovieImage(navController: NavController, title: Long, posterPath: String) {
+fun MovieImage(navController: NavController, title: Long, backDrop: String) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),
@@ -97,6 +98,24 @@ fun MovieImage(navController: NavController, title: Long, posterPath: String) {
             .wrapContentSize()
             .clickable { navController.navigateToDetailScreen(title) }
     ) {
+//        val paramValue = "param\\with\\backslash"
+//        val yourURLStr = posterPath + URLEncoder.encode(paramValue, "UTF-8")
+//        val url = URL(yourURLStr)
+
+        AsyncImage(
+            modifier = Modifier
+                .size(170.dp)
+                .fillMaxWidth(),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(Constants.IMAGE_BASE_URL + backDrop)
+                .size(Size.ORIGINAL)
+                .error(R.drawable.image_2)
+                .crossfade(true)
+                .build(),
+            contentDescription = "",
+            placeholder = painterResource(id = R.drawable.image_2),
+            contentScale = ContentScale.Crop
+        )
 //        AsyncImage(
 //            modifier = Modifier
 //                .height(170.dp)
@@ -106,16 +125,16 @@ fun MovieImage(navController: NavController, title: Long, posterPath: String) {
 //            contentDescription = "",
 //            placeholder = painterResource(R.drawable.profile_picture)
 //        )
-        
-        Image(
-            painter = rememberImagePainter(R.drawable.image_2),
-            //painter = rememberAsyncImagePainter(posterPath),
-            modifier = Modifier
-                .height(170.dp)
-                .fillMaxWidth(),
-            contentScale = ContentScale.Crop,
-            contentDescription = "",
-        )
+
+//        Image(
+//            painter = rememberImagePainter(R.drawable.image_2),
+//            //painter = rememberAsyncImagePainter(posterPath),
+//            modifier = Modifier
+//                .height(170.dp)
+//                .fillMaxWidth(),
+//            contentScale = ContentScale.Crop,
+//            contentDescription = "",
+//        )
     }
 }
 
@@ -140,24 +159,24 @@ fun MovieRate(voteAverage: Double?) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-            Icon(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .size(18.dp),
-                imageVector = Icons.Filled.Star,
-                contentDescription = "Expand row icon",
-                tint = Color(0xFFFFC319) //Color.Yellow
-            )
-            Text(
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(start = 5.dp)
-                    .align(Alignment.CenterVertically),
-                text = voteAverage.toString() ?: "Default count",
-                color = Color(0xFF9C9C9C),
-                style = MaterialTheme.typography.headlineMedium,
-                fontFamily = FontFamily(Font(R.font.mulish_regular)),
-                fontSize = 12.sp
-            )
-        }
+        Icon(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .size(18.dp),
+            imageVector = Icons.Filled.Star,
+            contentDescription = "Expand row icon",
+            tint = Color(0xFFFFC319) //Color.Yellow
+        )
+        Text(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(start = 5.dp)
+                .align(Alignment.CenterVertically),
+            text = voteAverage.toString() ?: "Default count",
+            color = Color(0xFF9C9C9C),
+            style = MaterialTheme.typography.headlineMedium,
+            fontFamily = FontFamily(Font(R.font.mulish_regular)),
+            fontSize = 12.sp
+        )
+    }
 }

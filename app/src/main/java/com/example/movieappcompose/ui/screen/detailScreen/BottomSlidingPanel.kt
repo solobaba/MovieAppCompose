@@ -25,7 +25,7 @@ import com.example.movieappcompose.model.response.Genre
 
 @Composable
 fun BottomSlidingPanel(
-    genres: List<Genre>,
+    genres: List<Genre?>,
     title: String,
     overview: String?,
     popularity: Double,

@@ -5,9 +5,11 @@ import androidx.room.Entity
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.versionedparcelable.VersionedParcelize
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+@JsonClass(generateAdapter = true)
 //@Entity(tableName = "all_movies")
 @Parcelize
 data class Movie(

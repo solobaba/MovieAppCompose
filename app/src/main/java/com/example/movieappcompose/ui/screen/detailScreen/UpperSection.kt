@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieappcompose.R
+import com.example.movieappcompose.model.network.Constants
 import com.example.movieappcompose.util.longToast
 import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson
@@ -73,11 +74,12 @@ fun UpperSection(
 @Composable
 fun ImageMovie(backdropPath: String?, modifier: Modifier) {
     Image(
-        painter = rememberAsyncImagePainter(R.drawable.image_8),
+        painter = rememberAsyncImagePainter(Constants.IMAGE_BASE_URL + backdropPath),
         contentDescription = "movie_image",
         modifier = Modifier
             .fillMaxWidth()
-            .then(modifier),
+            .fillMaxHeight(),
+            //.then(modifier),
         contentScale = ContentScale.Crop
     )
 }

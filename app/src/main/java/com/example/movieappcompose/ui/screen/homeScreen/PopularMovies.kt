@@ -48,6 +48,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.movieappcompose.model.network.Constants
+import com.example.movieappcompose.model.network.MovieWebService
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
 import com.example.movieappcompose.util.NetworkUtils
@@ -56,23 +58,20 @@ import com.example.movieappcompose.util.shortToast
 @Composable
 fun VerticalMovie(navController: NavController) {
     val context = LocalContext.current
-    if (!NetworkUtils.isNetworkAvailable(context)) {
-        context.shortToast("Network not available, please check your internet connection")
-    } else {
-        val viewModel: FetchMoviesViewModel = viewModel()
-        val horizontalMovies = viewModel.popularMoviesList.value
-        val loading by viewModel._loading.collectAsState()
 
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-        ) {
-            CircularIndeterminateProgressBar(isDisplayed = loading)
+    val viewModel: FetchMoviesViewModel = viewModel()
+    val horizontalMovies = viewModel.popularMoviesList.value
+    val loading by viewModel._loading.collectAsState()
 
-            LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                items(horizontalMovies) { movie ->
-                    PopularMovies(navController, movie)
-                }
+    Box(
+        modifier = Modifier
+            .fillMaxHeight()
+    ) {
+        CircularIndeterminateProgressBar(isDisplayed = loading)
+
+        LazyColumn(contentPadding = PaddingValues(10.dp)) {
+            items(horizontalMovies) { movie ->
+                PopularMovies(navController, movie)
             }
         }
     }
@@ -110,7 +109,7 @@ fun PopularMovieImage(navController: NavController, movie: Movie) {
             modifier = Modifier
                 .height(130.dp)
                 .width(100.dp),
-            model = R.drawable.image_1, //movie.poster_path ?: "",
+            model = (Constants.IMAGE_BASE_URL + movie.backdrop_path) ?: "", //R.drawable.image_1,
             contentScale = ContentScale.Crop,
             contentDescription = "",
             placeholder = painterResource(R.drawable.profile_picture)

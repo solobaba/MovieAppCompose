@@ -72,6 +72,7 @@ fun CloseIcon(navController: NavController) {
                 .matchParentSize()
                 .blur(16.dp)
                 .background(Color.LightGray.copy(alpha = .4f))
+                //.background(Color.LightGray.copy(alpha = .4f))
         )
     }
 }

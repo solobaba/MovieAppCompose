@@ -56,7 +56,8 @@ class MainActivity : ComponentActivity() {
                         content = {
                             MoviesAppNavHost(
                                 navController,
-                                innerPadding
+                                innerPadding,
+                                onClickButton = { }
                             )
                         },
                     )

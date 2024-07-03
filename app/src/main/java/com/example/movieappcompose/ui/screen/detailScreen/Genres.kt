@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.model.response.Genre
 
 @Composable
-fun Genres(genres: List<Genre>) {
+fun Genres(genres: List<Genre?>) {
     LazyRow(contentPadding = PaddingValues(16.dp)) {
         itemsIndexed(genres) {_, genres ->
             GenreItems(genres)
@@ -24,7 +24,7 @@ fun Genres(genres: List<Genre>) {
 }
 
 @Composable
-fun GenreItems(genres: Genre) {
+fun GenreItems(genres: Genre?) {
     Row(modifier = Modifier.padding(5.dp)) {
         Button(
             modifier = Modifier.padding(2.dp),
@@ -34,7 +34,7 @@ fun GenreItems(genres: Genre) {
                 color = Color.LightGray
             )) {
             Text(
-                text = genres.name ?: "",
+                text = genres?.name ?: "",
                 color = Color.DarkGray
                 )
         }
