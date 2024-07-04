@@ -1,5 +1,6 @@
 package com.example.movieappcompose.ui.navigation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +41,10 @@ fun MoviesAppNavHost(
             RetryItem(
                 modifier = Modifier
                     .width(90.dp)
-                    .height(40.dp),
+                    .height(40.dp)
+                    .clickable {
+                        navController.navigate(ScreenRoute.Home.route)
+                    },
                 message = stringResource(id = R.string.check_your_internet_connection),
                 onClick = onClickButton
             )

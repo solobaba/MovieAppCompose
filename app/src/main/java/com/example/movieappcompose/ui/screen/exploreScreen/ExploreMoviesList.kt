@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -29,7 +30,7 @@ import com.example.movieappcompose.viewmodel.ExploreMoviesViewModel
 fun ExploreMoviesList(navController: NavController, id: String?) {
     Column {
         Toolbar(
-            title = "Explore",
+            title = stringResource(R.string.explore),
             icon = rememberAsyncImagePainter(R.drawable.ic_baseline_arrow_black_back_24)
         ) {
             navController.popBackStack()
@@ -46,7 +47,7 @@ fun MovieList(id: String?, navController: NavController) {
     } else {
         if (id == "0") {
             val viewModel: ExploreMoviesViewModel = viewModel()
-            val horizontalMovies = viewModel.voteMoviesList.value
+            val nowShowingMovies = viewModel.voteMoviesList.value
             val loading by viewModel._loading.collectAsState()
 
             Box(
@@ -56,14 +57,14 @@ fun MovieList(id: String?, navController: NavController) {
                 CircularIndeterminateProgressBar(isDisplayed = loading)
 
                 LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                    items(horizontalMovies) { movie ->
+                    items(nowShowingMovies) { movie ->
                         PopularMovies(navController, movie)
                     }
                 }
             }
         } else {
             val viewModel: ExploreMoviesViewModel = viewModel()
-            val horizontalMovies = viewModel.popularMoviesList.value
+            val popularMovies = viewModel.popularMoviesList.value
             val loading by viewModel._loading.collectAsState()
 
             Box(
@@ -73,7 +74,7 @@ fun MovieList(id: String?, navController: NavController) {
                 CircularIndeterminateProgressBar(isDisplayed = loading)
 
                 LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                    items(horizontalMovies) { movie ->
+                    items(popularMovies) { movie ->
                         PopularMovies(navController, movie)
                     }
                 }

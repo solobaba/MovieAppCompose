@@ -27,4 +27,4 @@ data class Movie(
     val video: Boolean? = false,
     val vote_average: Double? = 0.0,
     val vote_count: Long? = 0
-) : Parcelable
+): Parcelable

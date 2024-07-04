@@ -75,7 +75,7 @@ fun NowShowingHeader(navController: NavController) {
         ) {
             Text(
                 modifier = Modifier.align(Alignment.CenterStart),
-                text = "Now Showing",
+                text = stringResource(R.string.now_showing),
                 color = Color.DarkGray,
                 fontFamily = FontFamily(Font(R.font.merriweather_black)),
                 textAlign = TextAlign.Center
@@ -86,12 +86,12 @@ fun NowShowingHeader(navController: NavController) {
                     .align(Alignment.CenterEnd),
                 onClick = { navController.navigateToExploreScreen("0") },
                 border = BorderStroke(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = Color.LightGray
                 )
             ) {
                 Text(
-                    text = "See more",
+                    text = stringResource(R.string.see_more),
                     color = Color.DarkGray
                 )
             }
@@ -122,7 +122,7 @@ fun PopularMoviesHeader(navController: NavController) {
         ) {
             Text(
                 modifier = Modifier.align(Alignment.CenterStart),
-                text = "Popular",
+                text = stringResource(R.string.popular),
                 color = Color.DarkGray,
                 fontFamily = FontFamily(Font(R.font.merriweather_black)),
                 textAlign = TextAlign.Center
@@ -138,7 +138,7 @@ fun PopularMoviesHeader(navController: NavController) {
                 )
             ) {
                 Text(
-                    text = "See more",
+                    text = stringResource(R.string.see_more),
                     color = Color.DarkGray
                 )
             }
