@@ -1,14 +1,13 @@
-package com.example.movieappcompose.model.network
+package com.example.movieappcompose.movie.data.remote
 
-import com.example.movieappcompose.model.response.DiscoverResult
-import com.example.movieappcompose.model.response.MovieDetail
+import com.example.movieappcompose.movie.data.remote.response.DiscoverResult
+import com.example.movieappcompose.movie.data.remote.response.MovieDetail
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 

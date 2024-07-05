@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieappcompose.model.repository.MovieRepository
-import com.example.movieappcompose.model.response.MovieDetail
+import com.example.movieappcompose.movie.data.remote.response.MovieDetail
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

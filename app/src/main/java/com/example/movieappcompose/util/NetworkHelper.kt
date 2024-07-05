@@ -11,7 +11,6 @@ import java.net.UnknownHostException
 import kotlin.reflect.KClass
 
 object NetworkHelper {
-
     suspend fun <T : Any> safeApiResult(
         ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
         call: suspend () -> Response<T>,
@@ -22,11 +21,11 @@ object NetworkHelper {
                 when {
                     response.isSuccessful -> ApiResult.Success(response.body()!!)
 
-                    response.code() == 500 -> ApiResult.Error(Exception("An error has occur, Check your input"))
+                    response.code() == 500 -> ApiResult.Error("An error has occur, Check your input")
                     else -> {
                         //404 {"Message":"Consumer Not Found"}
                         println("Developer Error: $response")
-                        ApiResult.Error(Exception("Developer Error: $response"))
+                        ApiResult.Error("Developer Error: $response")
                     }
                 }
             } catch (e: Throwable) {
@@ -37,10 +36,10 @@ object NetworkHelper {
                         UnknownHostException::class
                     )
                 if (e::class in networkExceptions) {
-                    ApiResult.NetworkError()
+                    ApiResult.Error("Network error")
                 } else {
                     println("Unknown Error: $e")
-                    ApiResult.Error(Exception("Something went wrong"))
+                    ApiResult.Error("Something went wrong")
                 }
             }
         }

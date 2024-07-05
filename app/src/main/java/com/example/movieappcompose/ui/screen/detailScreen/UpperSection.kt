@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieappcompose.R
-import com.example.movieappcompose.model.network.Constants
+import com.example.movieappcompose.movie.data.remote.Constants
 import com.example.movieappcompose.util.longToast
 import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson

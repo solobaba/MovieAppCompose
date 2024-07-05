@@ -1,4 +1,4 @@
-package com.example.movieappcompose.model.response
+package com.example.movieappcompose.movie.data.remote.response
 
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass

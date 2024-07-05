@@ -1,10 +1,10 @@
 package com.example.movieappcompose.model.repository
 
 import android.util.Log
-import com.example.movieappcompose.model.network.MovieWebService
-import com.example.movieappcompose.model.response.DiscoverResult
-import com.example.movieappcompose.model.response.Movie
-import com.example.movieappcompose.model.response.MovieDetail
+import com.example.movieappcompose.movie.data.remote.MovieWebService
+import com.example.movieappcompose.movie.data.remote.response.DiscoverResult
+import com.example.movieappcompose.movie.data.remote.response.Movie
+import com.example.movieappcompose.movie.data.remote.response.MovieDetail
 import com.example.movieappcompose.util.SortBy
 import com.google.gson.Gson
 

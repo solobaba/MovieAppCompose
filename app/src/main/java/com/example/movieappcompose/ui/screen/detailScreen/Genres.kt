@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.movieappcompose.model.response.Genre
+import com.example.movieappcompose.movie.data.remote.response.Genre
 
 @Composable
 fun Genres(genres: List<Genre?>) {

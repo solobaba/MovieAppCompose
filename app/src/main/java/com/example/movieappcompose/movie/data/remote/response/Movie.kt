@@ -1,4 +1,4 @@
-package com.example.movieappcompose.model.response
+package com.example.movieappcompose.movie.data.remote.response
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -10,13 +10,12 @@ import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
-//@Entity(tableName = "all_movies")
 @Parcelize
 data class Movie(
     val adult: Boolean? = false,
     val backdrop_path: String? = "",
-    val genre_ids: List<Int> = listOf(),
-    val id: Long = 0,
+    val genre_ids: List<Int>? = listOf(),
+    val id: Int? = 0,
     val original_language: String? = "",
     val original_title: String? = "",
     val overview: String? = "",

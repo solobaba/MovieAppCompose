@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -42,17 +41,12 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.movieappcompose.R
-import com.example.movieappcompose.model.network.Constants
-import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.movie.data.remote.Constants
+import com.example.movieappcompose.movie.data.remote.response.Movie
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
-import com.example.movieappcompose.ui.component.RetryItem
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
-import com.example.movieappcompose.util.NetworkUtils
-import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
-import java.net.URL
-import java.net.URLEncoder
 
 @Composable
 fun HorizontalMovieList(navController: NavController) {
@@ -80,16 +74,16 @@ fun VoteCountMovieList(navController: NavController, movie: Movie) {
             .width(150.dp)
             .wrapContentSize()
             .padding(10.dp)
-            .clickable { navController.navigateToDetailScreen(movie.id) }
+            .clickable { navController.navigateToDetailScreen(movie.id ?: 0) }
     ) {
-        MovieImage(navController, movie.id, movie.backdrop_path ?: "")
+        MovieImage(navController, movie.id ?: 0, movie.backdrop_path ?: "")
         MovieTitle(movie.title)
         MovieRate(movie.vote_average)
     }
 }
 
 @Composable
-fun MovieImage(navController: NavController, title: Long, backDrop: String) {
+fun MovieImage(navController: NavController, title: Int, backDrop: String) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(Color.White),

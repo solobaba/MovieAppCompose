@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -39,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.movieappcompose.R
-import com.example.movieappcompose.model.response.Movie
+import com.example.movieappcompose.movie.data.remote.response.Movie
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -48,12 +46,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.movieappcompose.model.network.Constants
-import com.example.movieappcompose.model.network.MovieWebService
+import com.example.movieappcompose.movie.data.remote.Constants
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
-import com.example.movieappcompose.util.NetworkUtils
-import com.example.movieappcompose.util.shortToast
 
 @Composable
 fun VerticalMovie(navController: NavController) {
@@ -83,7 +78,7 @@ fun PopularMovies(navController: NavController, movie: Movie) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable { navController.navigateToDetailScreen(movie.id) }
+            .clickable { navController.navigateToDetailScreen(movie.id ?: 0) }
     ) {
         PopularMovieImage(navController, movie)
         MovieTitleOverview(
@@ -103,7 +98,7 @@ fun PopularMovieImage(navController: NavController, movie: Movie) {
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier
             .wrapContentSize()
-            .clickable { navController.navigateToDetailScreen(movie.id) }
+            .clickable { navController.navigateToDetailScreen(movie.id ?: 0) }
     ) {
         AsyncImage(
             modifier = Modifier

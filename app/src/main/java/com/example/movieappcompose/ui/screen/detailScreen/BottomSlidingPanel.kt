@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.R
-import com.example.movieappcompose.model.response.Genre
+import com.example.movieappcompose.movie.data.remote.response.Genre
 
 @Composable
 fun BottomSlidingPanel(

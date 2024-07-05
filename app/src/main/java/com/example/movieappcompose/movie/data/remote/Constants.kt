@@ -1,6 +1,6 @@
-package com.example.movieappcompose.model.network
+package com.example.movieappcompose.movie.data.remote
 
-import com.example.movieappcompose.model.network.Constants.BASE_URL
+import com.example.movieappcompose.movie.data.remote.Constants.BASE_URL
 import com.example.movieappcompose.util.buildRetrofit
 
 object Constants {
