@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
+import com.example.movieappcompose.movie.presentation.screens.NowShowingMovies
+import com.example.movieappcompose.movie.presentation.screens.PopularListMovies
+import com.example.movieappcompose.movie.presentation.screens.PopularMovieList
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToExploreScreen
 import com.example.movieappcompose.util.NetworkUtils
@@ -56,7 +59,8 @@ fun NowShowingMoviesList(
     navController: NavController
 ) {
     NowShowingHeader(navController)
-    HorizontalMovieList(navController)
+    NowShowingMovies(navController)
+    //HorizontalMovieList(navController)
 }
 
 @Composable
@@ -104,7 +108,8 @@ fun PopularMoviesList(
     navController: NavController
 ) {
     PopularMoviesHeader(navController)
-    VerticalMovie(navController)
+    PopularMovieList(navController)
+    //VerticalMovie(navController)
 }
 
 @Composable

@@ -43,9 +43,11 @@ import coil.size.Size
 import com.example.movieappcompose.R
 import com.example.movieappcompose.movie.data.remote.Constants
 import com.example.movieappcompose.movie.data.remote.response.Movie
+import com.example.movieappcompose.movie.presentation.screens.MovieImage
+import com.example.movieappcompose.movie.presentation.screens.MovieRate
+import com.example.movieappcompose.movie.presentation.screens.MovieTitle
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.navigateToDetailScreen
-import com.example.movieappcompose.util.toJson
 import com.example.movieappcompose.viewmodel.FetchMoviesViewModel
 
 @Composable
@@ -67,8 +69,6 @@ fun HorizontalMovieList(navController: NavController) {
 
 @Composable
 fun VoteCountMovieList(navController: NavController, movie: Movie) {
-    val moviesString = movie.toJson()
-
     Column(
         modifier = Modifier
             .width(150.dp)
@@ -79,98 +79,5 @@ fun VoteCountMovieList(navController: NavController, movie: Movie) {
         MovieImage(navController, movie.id ?: 0, movie.backdrop_path ?: "")
         MovieTitle(movie.title)
         MovieRate(movie.vote_average)
-    }
-}
-
-@Composable
-fun MovieImage(navController: NavController, title: Int, backDrop: String) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-        modifier = Modifier
-            .wrapContentSize()
-            .clickable { navController.navigateToDetailScreen(title) }
-    ) {
-//        val paramValue = "param\\with\\backslash"
-//        val yourURLStr = posterPath + URLEncoder.encode(paramValue, "UTF-8")
-//        val url = URL(yourURLStr)
-
-        AsyncImage(
-            modifier = Modifier
-                .size(170.dp)
-                .fillMaxWidth(),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(Constants.IMAGE_BASE_URL + backDrop)
-                .size(Size.ORIGINAL)
-                .error(R.drawable.image_2)
-                .crossfade(true)
-                .build(),
-            contentDescription = "",
-            placeholder = painterResource(id = R.drawable.image_2),
-            contentScale = ContentScale.Crop
-        )
-//        AsyncImage(
-//            modifier = Modifier
-//                .height(170.dp)
-//                .fillMaxWidth(),
-//            model = posterPath,
-//            contentScale = ContentScale.Crop,
-//            contentDescription = "",
-//            placeholder = painterResource(R.drawable.profile_picture)
-//        )
-
-//        Image(
-//            painter = rememberImagePainter(R.drawable.image_2),
-//            //painter = rememberAsyncImagePainter(posterPath),
-//            modifier = Modifier
-//                .height(170.dp)
-//                .fillMaxWidth(),
-//            contentScale = ContentScale.Crop,
-//            contentDescription = "",
-//        )
-    }
-}
-
-@Composable
-fun MovieTitle(title: String?) {
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        text = title ?: "Default title",
-        color = Color.DarkGray,
-        textAlign = TextAlign.Start,
-        fontSize = 14.sp,
-        fontFamily = FontFamily(Font(R.font.mulish_bold))
-    )
-}
-
-@Composable
-fun MovieRate(voteAverage: Double?) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Icon(
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .size(18.dp),
-            imageVector = Icons.Filled.Star,
-            contentDescription = "Expand row icon",
-            tint = Color(0xFFFFC319) //Color.Yellow
-        )
-        Text(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(start = 5.dp)
-                .align(Alignment.CenterVertically),
-            text = voteAverage.toString() ?: "Default count",
-            color = Color(0xFF9C9C9C),
-            style = MaterialTheme.typography.headlineMedium,
-            fontFamily = FontFamily(Font(R.font.mulish_regular)),
-            fontSize = 12.sp
-        )
     }
 }

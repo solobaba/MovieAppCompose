@@ -19,9 +19,9 @@ interface ApiService {
         @Query("api_key") apiKey: String = Constants.apiKey
     ): DiscoverResult
 
-    @GET("/3/discover/movie/{category}")
+    @GET("/3/discover/movie")
     suspend fun getMovieList(
-        @Path("category") category: String,
+        @Query("category") category: String,
         @Query("page") page: Int,
         @Query("api_key") apiKey: String = Constants.apiKey
     ): DiscoverResult
@@ -37,6 +37,3 @@ interface ApiService {
         @Query("api_key") apiKey: String = Constants.apiKey
     ): Response<GenreResult>
 }
-
-val Retrofit.movieApiService: ApiService
-    get() = create(ApiService::class.java)

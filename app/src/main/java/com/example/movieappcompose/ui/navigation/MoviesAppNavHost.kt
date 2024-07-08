@@ -31,30 +31,35 @@ fun MoviesAppNavHost(
 ) {
     val context = LocalContext.current
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        if (!NetworkUtils.isNetworkAvailable(context)) {
-            //context.shortToast("Network not available, please check your internet connection")
-
-            RetryItem(
-                modifier = Modifier
-                    .width(90.dp)
-                    .height(40.dp)
-                    .clickable {
-                        navController.navigate(ScreenRoute.Home.route)
-                    },
-                message = stringResource(id = R.string.check_your_internet_connection),
-                onClick = onClickButton
-            )
-        } else {
-            //val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
-                homeRoute(navController, innerPadding)
-                exploreRoute(navController)
-                movieDetailsRoute(navController)
-            }
-        }
+    NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
+        homeRoute(navController, innerPadding)
+        exploreRoute(navController)
+        movieDetailsRoute(navController)
     }
+
+//    Box(
+//        modifier = Modifier.fillMaxSize(),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        if (!NetworkUtils.isNetworkAvailable(context)) {
+//            //context.shortToast("Network not available, please check your internet connection")
+//
+//            RetryItem(
+//                modifier = Modifier
+//                    .width(90.dp)
+//                    .height(40.dp)
+//                    .clickable {
+//                        navController.navigate(ScreenRoute.Home.route)
+//                    },
+//                message = stringResource(id = R.string.check_your_internet_connection),
+//                onClick = onClickButton
+//            )
+//        } else {
+//            NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
+//                homeRoute(navController, innerPadding)
+//                exploreRoute(navController)
+//                movieDetailsRoute(navController)
+//            }
+//        }
+//    }
 }

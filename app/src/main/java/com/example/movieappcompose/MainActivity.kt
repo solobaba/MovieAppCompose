@@ -21,7 +21,9 @@ import com.example.movieappcompose.ui.navigation.BottomNavigation
 import com.example.movieappcompose.ui.navigation.MoviesAppNavHost
 import com.example.movieappcompose.ui.navigation.navGraphBuilder.ExploreMoviesArgs
 import com.example.movieappcompose.ui.screen.ScreenRoute
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
