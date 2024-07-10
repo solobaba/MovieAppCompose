@@ -1,4 +1,4 @@
-package com.example.movieappcompose.viewmodel
+package com.example.movieappcompose.movie.presentation.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel(
+class MovieDetails(
     private val repository: MovieRepository = MovieRepository.getInstance(),
 ) : ViewModel() {
 
@@ -39,28 +39,4 @@ class MovieDetailsViewModel(
     private suspend fun getMovieDetails(movieID: Int): MovieDetail {
         return repository.getMovieDetails(movieID)
     }
-
-
-//    private val _state = MutableStateFlow(Movie())
-//    val state = _state.asStateFlow()
-//    private val args = MovieDetailArgs(savedStateHandle)
-
-//    init {
-//        getMovieDetails()
-//    }
-
-//    private fun getMovieDetails() {
-//        val movie = moviesData.results.find { it.title == args.movieState }
-//        movie?.let { _state.update { movie } }
-//    }
-
-//    private val repository: MovieRepository = MovieRepository.getInstance()
-//
-//    private val _movieState = MutableStateFlow<Movie?>(null)
-//    val movieState = _movieState.asStateFlow()
-//
-//    init {
-//        val movieId = savedStateHandle.get<String>("movieTitle") ?: ""
-//        _movieState.value = repository.getMeal(movieId)
-//    }
 }

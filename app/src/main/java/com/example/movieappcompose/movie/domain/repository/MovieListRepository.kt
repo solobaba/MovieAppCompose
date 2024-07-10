@@ -1,5 +1,6 @@
 package com.example.movieappcompose.movie.domain.repository
 
+import com.example.movieappcompose.movie.domain.model.MovieDetailDomain
 import com.example.movieappcompose.movie.domain.model.MovieList
 import com.example.movieappcompose.util.ApiResult
 import kotlinx.coroutines.flow.Flow
@@ -12,4 +13,6 @@ interface MovieListRepository {
     ): Flow<ApiResult<List<MovieList>>>
 
     suspend fun getMovieById(id: Int) : Flow<ApiResult<MovieList>>
+
+    suspend fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailDomain>>
 }

@@ -41,7 +41,7 @@
 //import com.example.movieappcompose.R
 //import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 //import com.example.movieappcompose.util.shortToast
-//import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
+//import com.example.movieappcompose.movie.presentation.viewmodel.MovieDetailsViewModel
 //
 //@Composable
 //fun MovieDetailsScreen(

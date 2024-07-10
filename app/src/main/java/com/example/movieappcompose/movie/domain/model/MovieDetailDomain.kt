@@ -1,12 +1,6 @@
-package com.example.movieappcompose.movie.data.remote.response
+package com.example.movieappcompose.movie.domain.model
 
-import android.os.Parcelable
-import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
-
-@JsonClass(generateAdapter = true)
-@Parcelize
-data class MovieDetail(
+data class MovieDetailDomain(
     val adult: Boolean? = false,
     val backdrop_path: String? = "",
     val belongs_to_collection: BelongsToCollection? = BelongsToCollection(),
@@ -32,44 +26,34 @@ data class MovieDetail(
     val video: Boolean? = false,
     val vote_average: Double? = 0.0,
     val vote_count: Int? = 0
-): Parcelable
+)
 
-@JsonClass(generateAdapter = true)
-@Parcelize
 data class BelongsToCollection(
     val backdrop_path: String? = "",
     val id: Long? = 0,
     val name: String? = "",
     val poster_path: String? = ""
-): Parcelable
+)
 
-@JsonClass(generateAdapter = true)
-@Parcelize
 data class Genre(
     val id: Int? = 0,
     val name: String? = ""
-): Parcelable
+)
 
-@JsonClass(generateAdapter = true)
-@Parcelize
 data class ProductionCompany(
     val id: Int? = 0,
     val logo_path: String? = "",
     val name: String? = "",
     val origin_country: String? = ""
-): Parcelable
+)
 
-@JsonClass(generateAdapter = true)
-@Parcelize
 data class ProductionCountry(
     val iso_3166_1: String? = "",
     val name: String? = ""
-): Parcelable
+)
 
-@JsonClass(generateAdapter = true)
-@Parcelize
 data class SpokenLanguage(
     val english_name: String? = "",
     val iso_639_1: String? = "",
     val name: String? = ""
-): Parcelable
+)

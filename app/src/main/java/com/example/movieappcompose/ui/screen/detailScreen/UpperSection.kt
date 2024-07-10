@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,13 +24,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.movie.data.remote.Constants
 import com.example.movieappcompose.util.longToast
-import com.example.movieappcompose.viewmodel.MovieDetailsViewModel
+import com.example.movieappcompose.movie.presentation.viewmodel.MovieDetailsViewModel
 import com.google.gson.Gson
 
 @Composable
@@ -40,10 +42,6 @@ fun UpperSection(
     id: Int?,
     title: String
 ) {
-    val viewModel: MovieDetailsViewModel = viewModel()
-    val movieDetails = viewModel.movieDetails.value
-    Log.d("DetailsMovie", Gson().toJson(movieDetails))
-
     val context = LocalContext.current
 
     Box(

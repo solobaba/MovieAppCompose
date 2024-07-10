@@ -2,8 +2,10 @@ package com.example.movieappcompose.movie.data.repositoryImpl
 
 import com.example.movieappcompose.movie.data.local.MovieListDatabase
 import com.example.movieappcompose.movie.data.mappers.toMovie
+import com.example.movieappcompose.movie.data.mappers.toMovieDetails
 import com.example.movieappcompose.movie.data.mappers.toMovieEntity
 import com.example.movieappcompose.movie.data.remote.ApiService
+import com.example.movieappcompose.movie.domain.model.MovieDetailDomain
 import com.example.movieappcompose.movie.domain.model.MovieList
 import com.example.movieappcompose.movie.domain.repository.MovieListRepository
 import com.example.movieappcompose.util.ApiResult
@@ -91,6 +93,36 @@ class MovieListRepositoryImpl @Inject constructor(
 
             emit(ApiResult.Error("Error no such movie"))
             emit(ApiResult.Loading(false))
+        }
+    }
+
+    override suspend fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailDomain>> {
+        return flow {
+            emit(ApiResult.Loading(true))
+
+            val movieDetails = try {
+                apiService.getMovieDetails(movieId)
+            } catch (e: IOException) {
+                e.printStackTrace()
+                emit(ApiResult.Error("Error loading movies"))
+                return@flow
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(ApiResult.Error(message = "Error loading movies"))
+                return@flow
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(ApiResult.Error(message = "Error loading movies"))
+                return@flow
+            }
+
+            emit(ApiResult.Success(
+                movieDetails.toMovieDetails()
+            ))
+
+            emit(ApiResult.Error("Error no such movie"))
+            emit(ApiResult.Loading(false))
+            return@flow
         }
     }
 }

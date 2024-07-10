@@ -75,13 +75,9 @@ fun NowShowingLayout(
     ) {
         CircularIndeterminateProgressBar(isDisplayed = loading)
 
-        LazyRow(contentPadding = PaddingValues(10.dp)) {
+        LazyRow(contentPadding = PaddingValues(5.dp)) {
             items(movieState.nowShowingMovieList.size) { movie ->
                 NowShowList(navController, movieState.nowShowingMovieList[movie])
-
-                if (movie >= movieState.nowShowingMovieList.size - 1 && !movieState.isLoading) {
-                    onEvent(MovieUiEvent.Paginate(Category.NOW_SHOWING))
-                }
             }
         }
     }

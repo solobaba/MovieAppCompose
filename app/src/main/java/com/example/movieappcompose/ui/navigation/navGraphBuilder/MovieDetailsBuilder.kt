@@ -21,7 +21,6 @@ fun NavGraphBuilder.movieDetailsRoute(navController: NavController) {
             type = NavType.IntType
         })) { navBackStackEntry ->
         val movieID = navBackStackEntry.arguments?.getInt(MOVIE_DETAILS)
-        //val viewModel : MovieDetailsViewModel = viewModel()
         MovieDetailsScreen(navController = navController, movieID = movieID ?: 0)
     }
 }

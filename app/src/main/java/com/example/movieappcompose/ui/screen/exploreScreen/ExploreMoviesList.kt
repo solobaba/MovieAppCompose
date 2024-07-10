@@ -15,13 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieappcompose.R
+import com.example.movieappcompose.movie.presentation.event.MovieUiEvent
+import com.example.movieappcompose.movie.presentation.screens.PopularListMovies
+import com.example.movieappcompose.movie.presentation.viewmodel.MovieListViewmodel
 import com.example.movieappcompose.ui.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.ui.component.Toolbar
 import com.example.movieappcompose.ui.screen.homeScreen.PopularMovies
+import com.example.movieappcompose.util.Category
 import com.example.movieappcompose.util.NetworkUtils
 import com.example.movieappcompose.util.shortToast
 import com.example.movieappcompose.viewmodel.ExploreMoviesViewModel
@@ -46,36 +51,44 @@ fun MovieList(id: String?, navController: NavController) {
         mContext.shortToast("Network not available, please check your internet connection")
     } else {
         if (id == "0") {
-            val viewModel: ExploreMoviesViewModel = viewModel()
-            val nowShowingMovies = viewModel.voteMoviesList.value
-            val loading by viewModel._loading.collectAsState()
+            val viewModel = hiltViewModel<MovieListViewmodel>()
+            val movieState = viewModel.movieState.collectAsState().value
+            val loading by viewModel.loading.collectAsState()
+            val onEvent = viewModel::onEvent
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
                 CircularIndeterminateProgressBar(isDisplayed = loading)
 
                 LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                    items(nowShowingMovies) { movie ->
-                        PopularMovies(navController, movie)
+                    items(movieState.nowShowingMovieList.size) { movie ->
+                        PopularListMovies(navController, movieState.nowShowingMovieList[movie])
+
+                        if (movie >= movieState.nowShowingMovieList.size - 1 && !movieState.isLoading) {
+                            onEvent(MovieUiEvent.Paginate(Category.NOW_SHOWING))
+                        }
                     }
                 }
             }
         } else {
-            val viewModel: ExploreMoviesViewModel = viewModel()
-            val popularMovies = viewModel.popularMoviesList.value
-            val loading by viewModel._loading.collectAsState()
+            val viewModel = hiltViewModel<MovieListViewmodel>()
+            val movieState = viewModel.movieState.collectAsState().value
+            val loading by viewModel.loading.collectAsState()
+            val onEvent = viewModel::onEvent
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
                 CircularIndeterminateProgressBar(isDisplayed = loading)
 
                 LazyColumn(contentPadding = PaddingValues(10.dp)) {
-                    items(popularMovies) { movie ->
-                        PopularMovies(navController, movie)
+                    items(movieState.popularMovieList.size) { movie ->
+                        PopularListMovies(navController, movieState.popularMovieList[movie])
+
+                        if (movie >= movieState.popularMovieList.size - 1 && !movieState.isLoading) {
+                            onEvent(MovieUiEvent.Paginate(Category.POPULAR))
+                        }
                     }
                 }
             }

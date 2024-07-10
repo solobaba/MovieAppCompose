@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,17 +52,12 @@ fun MoviesHome(
 
 @Composable
 fun MoviesHomeList(navController: NavController) {
-    NowShowingMoviesList(navController)
-    PopularMoviesList(navController)
-}
-
-@Composable
-fun NowShowingMoviesList(
-    navController: NavController
-) {
     NowShowingHeader(navController)
     NowShowingMovies(navController)
     //HorizontalMovieList(navController)
+    PopularMoviesHeader(navController)
+    PopularMovieList(navController)
+    //VerticalMovie(navController)
 }
 
 @Composable
@@ -69,7 +66,7 @@ fun NowShowingHeader(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .height(65.dp)
-            .padding(start = 15.dp, end = 15.dp, top = 10.dp, bottom = 10.dp),
+            .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 0.dp),
         verticalAlignment = Alignment.Top,
     ) {
         Box(
@@ -104,21 +101,12 @@ fun NowShowingHeader(navController: NavController) {
 }
 
 @Composable
-fun PopularMoviesList(
-    navController: NavController
-) {
-    PopularMoviesHeader(navController)
-    PopularMovieList(navController)
-    //VerticalMovie(navController)
-}
-
-@Composable
 fun PopularMoviesHeader(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(65.dp)
-            .padding(start = 15.dp, end = 15.dp, top = 10.dp, bottom = 10.dp)
+            .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 0.dp)
     ) {
         Box(
             modifier = Modifier

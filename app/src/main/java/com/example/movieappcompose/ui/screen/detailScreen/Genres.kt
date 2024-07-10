@@ -12,10 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.movieappcompose.movie.data.remote.response.Genre
 
 @Composable
-fun Genres(genres: List<Genre?>) {
+fun Genres(genres: List<com.example.movieappcompose.movie.domain.model.Genre?>) {
     LazyRow(contentPadding = PaddingValues(16.dp)) {
         itemsIndexed(genres) {_, genres ->
             GenreItems(genres)
@@ -24,7 +23,7 @@ fun Genres(genres: List<Genre?>) {
 }
 
 @Composable
-fun GenreItems(genres: Genre?) {
+fun GenreItems(genres: com.example.movieappcompose.movie.domain.model.Genre?) {
     Row(modifier = Modifier.padding(5.dp)) {
         Button(
             modifier = Modifier.padding(2.dp),

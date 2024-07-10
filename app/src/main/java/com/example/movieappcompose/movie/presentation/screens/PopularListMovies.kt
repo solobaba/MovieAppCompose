@@ -59,7 +59,6 @@ fun PopularMovieList(navController: NavController) {
     PopularMovieLayout(
         navController = navController,
         movieState = movieState,
-        onEvent = viewmodel::onEvent,
         loading = loading
     )
 }
@@ -68,7 +67,6 @@ fun PopularMovieList(navController: NavController) {
 fun PopularMovieLayout(
     navController: NavController,
     movieState: MovieState,
-    onEvent: (MovieUiEvent) -> Unit,
     loading: Boolean
 ) {
     Box(
@@ -76,7 +74,7 @@ fun PopularMovieLayout(
     ) {
         CircularIndeterminateProgressBar(isDisplayed = loading)
 
-        LazyColumn(contentPadding = PaddingValues(10.dp)) {
+        LazyColumn(contentPadding = PaddingValues(5.dp)) {
             items(movieState.popularMovieList.size) { movie ->
                 PopularListMovies(navController, movieState.popularMovieList[movie])
             }
@@ -86,8 +84,6 @@ fun PopularMovieLayout(
 
 @Composable
 fun PopularListMovies(navController: NavController, movieList: MovieList) {
-    //CircularIndeterminateProgressBar(isDisplayed = false)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
