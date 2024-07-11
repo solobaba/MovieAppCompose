@@ -14,13 +14,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.movieappcompose.theme.MovieAppComposeTheme
-import com.example.movieappcompose.ui.navigation.BottomNavigation
-import com.example.movieappcompose.ui.navigation.MoviesAppNavHost
-import com.example.movieappcompose.ui.navigation.navGraphBuilder.ExploreMoviesArgs
-import com.example.movieappcompose.ui.screen.ScreenRoute
+import com.example.movieappcompose.movie.presentation.navigation.BottomNavigation
+import com.example.movieappcompose.movie.presentation.navigation.MoviesAppNavHost
+import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.ExploreMoviesArgs
+import com.example.movieappcompose.movie.presentation.screens.ScreenRoute
+import com.example.movieappcompose.movie.presentation.viewmodel.MovieListViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +36,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val viewModel = hiltViewModel<MovieListViewmodel>()
+
             MovieAppComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Scaffold(
@@ -42,6 +46,8 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         if (navBackStackEntry?.destination?.route == ScreenRoute.Explore.route) {
                             BottomNavigation(
+                                navController = navController,
+                                onEvent = viewModel::onEvent,
                                 selectedRoute = selectedRoute.value,
                                 onItemClick = { selectedRoute.value = it }
                             )
