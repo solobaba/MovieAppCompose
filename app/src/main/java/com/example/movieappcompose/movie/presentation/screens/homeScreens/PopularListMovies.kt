@@ -110,8 +110,8 @@ fun PopularMoviesImage(navController: NavController, movie: MovieList) {
     ) {
         AsyncImage(
             modifier = Modifier
-                .height(130.dp)
-                .width(100.dp),
+                .height(160.dp)
+                .width(120.dp),
             model = (Constants.IMAGE_BASE_URL + movie.backdrop_path) ?: "", //R.drawable.image_1,
             contentScale = ContentScale.Crop,
             contentDescription = "",

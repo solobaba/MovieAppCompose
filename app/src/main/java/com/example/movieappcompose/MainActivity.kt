@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.movieappcompose.movie.presentation.navigation.BottomNav
 import com.example.movieappcompose.theme.MovieAppComposeTheme
-import com.example.movieappcompose.movie.presentation.navigation.BottomNavigation
 import com.example.movieappcompose.movie.presentation.navigation.MoviesAppNavHost
 import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.ExploreMoviesArgs
 import com.example.movieappcompose.movie.presentation.screens.ScreenRoute
@@ -45,11 +45,9 @@ class MainActivity : ComponentActivity() {
                     containerColor = MaterialTheme.colorScheme.primary,
                     bottomBar = {
                         if (navBackStackEntry?.destination?.route == ScreenRoute.Explore.route) {
-                            BottomNavigation(
+                            BottomNav(
                                 navController = navController,
-                                onEvent = viewModel::onEvent,
-                                selectedRoute = selectedRoute.value,
-                                onItemClick = { selectedRoute.value = it }
+                                onEvent = viewModel::onEvent
                             )
                         }
                     }
@@ -65,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             MoviesAppNavHost(
                                 navController,
                                 innerPadding,
-                                onClickButton = { }
+                                onEvent = viewModel::onEvent
                             )
                         },
                     )
