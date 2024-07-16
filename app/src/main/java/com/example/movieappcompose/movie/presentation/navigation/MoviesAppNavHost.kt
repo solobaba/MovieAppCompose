@@ -36,4 +36,32 @@ fun MoviesAppNavHost(
         exploreRoute(navController)
         movieDetailsRoute(navController)
     }
+
+//    Box(
+//        modifier = Modifier.fillMaxSize(),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        if (!NetworkUtils.isNetworkAvailable(context)) {
+//            RetryItem(
+//                modifier = Modifier
+//                    .width(90.dp)
+//                    .height(40.dp)
+//                    .clickable {
+//                        navController.navigate(ScreenRoute.Home.route)
+//                    },
+//                message = stringResource(id = R.string.check_your_internet_connection),
+//                onClick = {
+//                    onEvent(MovieUiEvent.Navigate)
+//                    navController.popBackStack()
+//                    navController.navigate(ScreenRoute.Home.route)
+//                }
+//            )
+//        } else {
+//            NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
+//                homeRoute(navController, innerPadding)
+//                exploreRoute(navController)
+//                movieDetailsRoute(navController)
+//            }
+//        }
+//    }
 }
