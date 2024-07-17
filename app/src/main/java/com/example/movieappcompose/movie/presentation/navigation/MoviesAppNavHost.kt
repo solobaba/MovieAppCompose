@@ -20,6 +20,7 @@ import com.example.movieappcompose.movie.presentation.event.MovieUiEvent
 import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.exploreRoute
 import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.homeRoute
 import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.movieDetailsRoute
+import com.example.movieappcompose.movie.presentation.navigation.navGraphBuilder.searchRoute
 import com.example.movieappcompose.movie.presentation.screens.ScreenRoute
 import com.example.movieappcompose.util.NetworkUtils
 
@@ -33,6 +34,7 @@ fun MoviesAppNavHost(
 
     NavHost(navController = navController, startDestination = ScreenRoute.Home.route) {
         homeRoute(navController, innerPadding)
+        searchRoute(navController, innerPadding)
         exploreRoute(navController)
         movieDetailsRoute(navController)
     }

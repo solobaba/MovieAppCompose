@@ -88,6 +88,9 @@ fun BottomNav(
                                     navController.popBackStack()
                                     navController.navigate(ScreenRoute.Home.route)
                                 }
+                                1 -> {
+                                    navController.navigate(ScreenRoute.Search.route)
+                                }
                             }
                         }, icon = {
                             Column(
