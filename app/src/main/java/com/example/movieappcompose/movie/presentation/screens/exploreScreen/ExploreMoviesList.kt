@@ -22,8 +22,6 @@ import com.example.movieappcompose.movie.presentation.viewmodel.MovieListViewmod
 import com.example.movieappcompose.movie.presentation.component.CircularIndeterminateProgressBar
 import com.example.movieappcompose.movie.presentation.component.Toolbar
 import com.example.movieappcompose.util.Category
-import com.example.movieappcompose.util.NetworkUtils
-import com.example.movieappcompose.util.shortToast
 
 @Composable
 fun ExploreMoviesList(navController: NavController, id: String?) {

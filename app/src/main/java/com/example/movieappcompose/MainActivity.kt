@@ -44,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxHeight(),
                     containerColor = MaterialTheme.colorScheme.primary,
                     bottomBar = {
-                        if (navBackStackEntry?.destination?.route == ScreenRoute.Explore.route) {
+                        if (navBackStackEntry?.destination?.route == ScreenRoute.Explore.route
+                            || navBackStackEntry?.destination?.route == ScreenRoute.Search.route) {
                             BottomNav(
                                 navController = navController,
                                 onEvent = viewModel::onEvent
