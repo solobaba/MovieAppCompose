@@ -15,7 +15,7 @@ private const val ROUTE = "search"
 fun NavGraphBuilder.searchRoute(navController: NavController, innerPadding: PaddingValues) {
     composable(ScreenRoute.Search.route) {
         Box(modifier = Modifier.padding(innerPadding)) {
-            SearchLayout(navController = navController)
+            SearchLayout(navController = navController, focus = false)
         }
     }
 }

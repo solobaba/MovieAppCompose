@@ -1,38 +1,34 @@
 package com.example.movieappcompose.movie.presentation.screens.searchScreen
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.movieappcompose.R
 import com.example.movieappcompose.movie.presentation.component.SearchToolbar
-import com.example.movieappcompose.movie.presentation.component.Toolbar
 
 @Composable
-fun SearchLayout(navController: NavController) {
-
+fun SearchLayout(
+    navController: NavController,
+    focus: Boolean
+) {
     var showSearchDialog by remember {
         mutableStateOf(false)
     }
@@ -40,8 +36,15 @@ fun SearchLayout(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val focusRequester = remember {
+            FocusRequester()
+        }
+
         SearchToolbar(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(60.dp)
                 .padding(horizontal = 20.dp),
             title = stringResource(R.string.search),
@@ -57,38 +60,30 @@ fun SearchLayout(navController: NavController) {
             SearchDialog {
                 showSearchDialog = false
             }
-        SearchScreen(navController)
+        SearchScreen(navController, focusRequester, focus)
     }
 }
 
 @Composable
-fun SearchDialog(onDismissRequest: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        confirmButton = { 
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(id = R.string.okay))
-            }
-        },
-        title = {
-            Text(text = stringResource(id = R.string.search),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    Color.DarkGray, fontFamily = FontFamily(
-                        Font(R.font.merriweather_black)
-                    ),fontSize = 16.sp))
-        },
-        text = {
-            Text(text = stringResource(id = R.string.search_text),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    Color.DarkGray, fontSize = 14.sp))
-        }
-    )
-}
+fun SearchScreen(
+    navController: NavController, 
+    focusRequester: FocusRequester,
+    focus: Boolean
+) {
+    Spacer(modifier = Modifier.height(36.dp))
 
-@Composable
-fun SearchScreen(navController: NavController) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {}
+    EditableSearchBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(42.dp)
+            .padding(29.dp)
+            .background(Color.DarkGray),
+        focusRequester = focusRequester
+    ) {
+    }
+
+    if (focus)
+        LaunchedEffect(key1 = true, block = { focusRequester.requestFocus() })
+    
+    Spacer(modifier = Modifier.height(24.dp))
 }
