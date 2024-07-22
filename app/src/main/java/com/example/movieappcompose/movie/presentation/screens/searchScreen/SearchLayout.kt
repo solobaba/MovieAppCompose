@@ -66,24 +66,34 @@ fun SearchLayout(
 
 @Composable
 fun SearchScreen(
-    navController: NavController, 
+    navController: NavController,
     focusRequester: FocusRequester,
     focus: Boolean
 ) {
     Spacer(modifier = Modifier.height(36.dp))
 
-    EditableSearchBar(
-        modifier = Modifier
-            .fillMaxWidth()
+    SearchScreen(
+        modifier = Modifier.fillMaxWidth()
             .height(42.dp)
-            .padding(29.dp)
-            .background(Color.DarkGray),
+            .padding(20.dp)
+            .background(Color.Red),
+        searchQuery = null,
         focusRequester = focusRequester
     ) {
     }
 
+//    EditableSearchBar(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .height(42.dp)
+//            .padding(29.dp)
+//            .background(Color.DarkGray),
+//        focusRequester = focusRequester
+//    ) {
+//    }
+
     if (focus)
         LaunchedEffect(key1 = true, block = { focusRequester.requestFocus() })
-    
+
     Spacer(modifier = Modifier.height(24.dp))
 }

@@ -9,8 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -26,6 +31,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -53,12 +59,13 @@ fun EditableSearchBar(
     BasicTextField(
         value = searchQuery,
         onValueChange = {
-            searchQuery= it
+            searchQuery = it
             if (onValueChange != null) {
                 onValueChange(it)
             }
         },
-        modifier = modifier.focusRequester(focusRequester)
+        modifier = modifier
+            .focusRequester(focusRequester)
             .background(DarkGray),
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             fontFamily = FontFamily(Font(R.font.mulish_regular)),
@@ -93,7 +100,8 @@ fun EditableSearchBar(
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontFamily = FontFamily(Font(R.font.mulish_bold)),
                         color = if (showHintState.value) Gray600 else DarkGray,
-                        fontSize = 14.sp),
+                        fontSize = 14.sp
+                    ),
                 )
 
                 Icon(
@@ -101,11 +109,12 @@ fun EditableSearchBar(
                     contentDescription = "search",
                     modifier = Modifier.size(16.dp),
                     tint = DarkGray
-                    )
+                )
             }
         }
         Row(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(start = (24.7).dp, end = (17.78).dp)
                 .background(Color.DarkGray),
             verticalAlignment = Alignment.CenterVertically,
@@ -114,4 +123,56 @@ fun EditableSearchBar(
             innerTextField()
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    searchQuery: String?,
+    focusRequester: FocusRequester,
+    onSearchQueryChange: (String) -> Unit
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    SearchBar(
+        modifier = modifier,
+        query = searchQuery ?: "",
+        onQueryChange = onSearchQueryChange,
+        onSearch = { keyboardController?.hide() },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.search_movies),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontFamily = FontFamily(Font(R.font.mulish_bold)),
+                    color = DarkGray,
+                    fontSize = 14.sp
+                )
+            )
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = "search",
+                modifier = Modifier.size(16.dp),
+                tint = DarkGray
+            )
+        },
+        trailingIcon = {
+            if (searchQuery?.isNotEmpty() == true) {
+                IconButton(onClick = { onSearchQueryChange("")}) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.clear_search),
+                        modifier = Modifier.size(16.dp),
+                        tint = DarkGray
+                    )
+                }
+            }
+        },
+        content = {},
+        active = true,
+        onActiveChange = {},
+        tonalElevation = 0.dp
+    )
 }
