@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
@@ -125,54 +126,67 @@ fun EditableSearchBar(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SearchScreen(
-    modifier: Modifier = Modifier,
-    searchQuery: String?,
-    focusRequester: FocusRequester,
-    onSearchQueryChange: (String) -> Unit
-) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
-    SearchBar(
-        modifier = modifier,
-        query = searchQuery ?: "",
-        onQueryChange = onSearchQueryChange,
-        onSearch = { keyboardController?.hide() },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.search_movies),
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    fontFamily = FontFamily(Font(R.font.mulish_bold)),
-                    color = DarkGray,
-                    fontSize = 14.sp
-                )
-            )
-        },
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_search),
-                contentDescription = "search",
-                modifier = Modifier.size(16.dp),
-                tint = DarkGray
-            )
-        },
-        trailingIcon = {
-            if (searchQuery?.isNotEmpty() == true) {
-                IconButton(onClick = { onSearchQueryChange("")}) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.clear_search),
-                        modifier = Modifier.size(16.dp),
-                        tint = DarkGray
-                    )
-                }
-            }
-        },
-        content = {},
-        active = true,
-        onActiveChange = {},
-        tonalElevation = 0.dp
-    )
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SearchScreen(
+//    modifier: Modifier = Modifier,
+//    searchQuery: String?,
+//    state: Boolean,
+//    focusRequester: FocusRequester,
+//    onSearchQueryChange: (String) -> Unit
+//) {
+//    val keyboardController = LocalSoftwareKeyboardController.current
+//
+//    Box(
+//        modifier = modifier
+//            .fillMaxSize()
+//            .clip(MaterialTheme.shapes.large)
+//            .background(DarkGray)
+//    ) {
+//        SearchBar(
+//            modifier = modifier.fillMaxWidth(),
+//            query = searchQuery ?: "",
+//            onQueryChange = {
+//                searchQuery = it
+//            },
+//            onSearch = {
+//                state = false
+//                keyboardController?.hide()
+//            },
+//            placeholder = {
+//                Text(
+//                    text = stringResource(R.string.search_movies),
+//                    style = MaterialTheme.typography.bodyLarge.copy(
+//                        fontFamily = FontFamily(Font(R.font.mulish_bold)),
+//                        color = DarkGray,
+//                        fontSize = 14.sp
+//                    )
+//                )
+//            },
+//            leadingIcon = {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.ic_search),
+//                    contentDescription = "search",
+//                    modifier = Modifier.size(16.dp),
+//                    tint = DarkGray
+//                )
+//            },
+//            trailingIcon = {
+//                if (searchQuery?.isNotEmpty() == true) {
+//                    IconButton(onClick = { onSearchQueryChange("") }) {
+//                        Icon(
+//                            imageVector = Icons.Default.Close,
+//                            contentDescription = stringResource(R.string.clear_search),
+//                            modifier = Modifier.size(16.dp),
+//                            tint = DarkGray
+//                        )
+//                    }
+//                }
+//            },
+//            content = {},
+//            active = true,
+//            onActiveChange = { },
+//            tonalElevation = 0.dp
+//        )
+//    }
+//}
