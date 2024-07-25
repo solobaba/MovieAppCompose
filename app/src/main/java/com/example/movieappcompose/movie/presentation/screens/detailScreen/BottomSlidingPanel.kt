@@ -21,17 +21,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.R
+import com.example.movieappcompose.movie.domain.model.Genre
+import com.skydoves.flexible.bottomsheet.material.FlexibleBottomSheet
+import com.skydoves.flexible.core.FlexibleSheetSize
+import com.skydoves.flexible.core.rememberFlexibleBottomSheetState
 
 @Composable
 fun BottomSlidingPanel(
-    genres: List<com.example.movieappcompose.movie.domain.model.Genre?>,
+    genres: List<Genre?>,
     title: String,
     overview: String?,
     popularity: Double,
     status: String?,
     releaseDate: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit
 ) {
+//    FlexibleBottomSheet(
+//        onDismissRequest = onDismissRequest,
+//        sheetState = rememberFlexibleBottomSheetState(
+//            flexibleSheetSize = FlexibleSheetSize(
+//                fullyExpanded = 0.9f,
+//                intermediatelyExpanded = 0.5f,
+//                slightlyExpanded = 0.15f
+//            ),
+//            isModal = true,
+//            skipSlightlyExpanded = false
+//        ),
+//        containerColor = Color.White
+//    ) {
+//    }
+    
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
@@ -72,7 +92,8 @@ fun BottomSlidingPanel(
                 text = stringResource(R.string.booking),
                 textColor = Color.White,
                 iconResource = R.drawable.ic_card, iconColor = Color.White.copy(alpha = .87f),
-                modifier = Modifier.padding(bottom = 32.dp + 16.dp)
+                modifier = Modifier
+                    .padding(bottom = 32.dp + 16.dp)
                     .align(Alignment.CenterHorizontally)
             )
         }

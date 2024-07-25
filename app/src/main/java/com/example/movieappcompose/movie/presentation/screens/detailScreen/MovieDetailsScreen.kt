@@ -37,18 +37,21 @@ fun MovieDetailsScreen(
 //        context.shortToast("Network not available, please check your internet connection")
 //    } else {
     val viewModel = hiltViewModel<MovieDetailsViewModel>()
+    val movieDetailsState = viewModel.movieDetailsState.collectAsState().value
+    val loading by viewModel.loading.collectAsState()
+    //val onEvent = viewModel::onEvent
     viewModel.movieID = movieID
-    MovieDetailsContent(navController)
+    MovieDetailsContent(navController, movieDetailsState, loading)
     //}
 }
 
 @Composable
-fun MovieDetailsContent(navController: NavController) {
+fun MovieDetailsContent(
+    navController: NavController,
+    movieDetailsState: MovieDetailsState,
+    loading: Boolean
+) {
     val context = LocalContext.current
-    val viewModel = hiltViewModel<MovieDetailsViewModel>()
-    val movieDetailsState = viewModel.movieDetailsState.collectAsState().value
-    //val onEvent = viewModel::onEvent
-    val loading by viewModel.loading.collectAsState()
     Log.d("DetailsMovie", Gson().toJson(movieDetailsState.movieDetailDomain))
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -88,7 +91,7 @@ fun MovieDetailsContent(navController: NavController) {
                 movieDetailsState.movieDetailDomain?.status,
                 movieDetailsState.movieDetailDomain?.release_date,
                 Modifier.align(Alignment.BottomEnd)
-            )
+            ){}
         }
     }
 }
