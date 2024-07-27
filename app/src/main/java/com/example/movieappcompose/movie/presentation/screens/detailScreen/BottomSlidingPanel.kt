@@ -37,20 +37,20 @@ fun BottomSlidingPanel(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit
 ) {
-//    FlexibleBottomSheet(
-//        onDismissRequest = onDismissRequest,
-//        sheetState = rememberFlexibleBottomSheetState(
-//            flexibleSheetSize = FlexibleSheetSize(
-//                fullyExpanded = 0.9f,
-//                intermediatelyExpanded = 0.5f,
-//                slightlyExpanded = 0.15f
-//            ),
-//            isModal = true,
-//            skipSlightlyExpanded = false
-//        ),
-//        containerColor = Color.White
-//    ) {
-//    }
+    FlexibleBottomSheet(
+        onDismissRequest = onDismissRequest,
+        sheetState = rememberFlexibleBottomSheetState(
+            flexibleSheetSize = FlexibleSheetSize(
+                fullyExpanded = 0.9f,
+                intermediatelyExpanded = 0.5f,
+                slightlyExpanded = 0.15f
+            ),
+            isModal = true,
+            skipSlightlyExpanded = false
+        ),
+        containerColor = Color.White
+    ) {
+    }
     
     Box(
         modifier = Modifier
