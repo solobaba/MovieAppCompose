@@ -12,14 +12,6 @@ import retrofit2.http.Query
 interface ApiService {
     //@Headers(Constants.apiToken)
     @GET("/3/discover/movie")
-    suspend fun getMovieListAsync(
-        @Query("sort_by") sortBy: String,
-        @Query("with_genres") withGenres: String ?= null,
-        @Query("page") page: Int,
-        @Query("api_key") apiKey: String = Constants.apiKey
-    ): DiscoverResult
-
-    @GET("/3/discover/movie")
     suspend fun getMovieList(
         @Query("category") category: String,
         @Query("page") page: Int,

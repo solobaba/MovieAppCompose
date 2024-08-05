@@ -22,9 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.movieappcompose.R
 import com.example.movieappcompose.movie.domain.model.Genre
-import com.skydoves.flexible.bottomsheet.material.FlexibleBottomSheet
-import com.skydoves.flexible.core.FlexibleSheetSize
-import com.skydoves.flexible.core.rememberFlexibleBottomSheetState
 
 @Composable
 fun BottomSlidingPanel(
@@ -37,20 +34,20 @@ fun BottomSlidingPanel(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit
 ) {
-    FlexibleBottomSheet(
-        onDismissRequest = onDismissRequest,
-        sheetState = rememberFlexibleBottomSheetState(
-            flexibleSheetSize = FlexibleSheetSize(
-                fullyExpanded = 0.9f,
-                intermediatelyExpanded = 0.5f,
-                slightlyExpanded = 0.15f
-            ),
-            isModal = true,
-            skipSlightlyExpanded = false
-        ),
-        containerColor = Color.White
-    ) {
-    }
+//    FlexibleBottomSheet(
+//        onDismissRequest = onDismissRequest,
+//        sheetState = rememberFlexibleBottomSheetState(
+//            flexibleSheetSize = FlexibleSheetSize(
+//                fullyExpanded = 0.9f,
+//                intermediatelyExpanded = 0.5f,
+//                slightlyExpanded = 0.15f
+//            ),
+//            isModal = true,
+//            skipSlightlyExpanded = false
+//        ),
+//        containerColor = Color.White
+//    ) {
+//    }
     
     Box(
         modifier = Modifier
